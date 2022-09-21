@@ -10,10 +10,10 @@ import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'edc-demo-asset-viewer',
-  templateUrl: './asset-viewer.component.html',
-  styleUrls: ['./asset-viewer.component.scss']
+  templateUrl: './publish.component.html',
+  styleUrls: ['./publish.component.scss']
 })
-export class AssetViewerComponent implements OnInit {
+export class PublishComponent implements OnInit {
 
   filteredAssets$: Observable<Asset[]> = of([]);
   searchText = '';

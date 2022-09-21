@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {TransferProcessStates} from "../../models/transfer-process-states";
 import {ContractOffer} from "../../models/contract-offer";
 import {NegotiationResult} from "../../models/negotiation-result";
+import {Title} from "@angular/platform-browser";
 
 interface RunningTransferProcess {
   processId: string;
@@ -35,6 +36,7 @@ export class CatalogBrowserComponent implements OnInit {
               public dialog: MatDialog,
               private router: Router,
               private notificationService: NotificationService,
+              public titleService: Title,
               @Inject('HOME_CONNECTOR_STORAGE_ACCOUNT') private homeConnectorStorageAccount: string) {
   }
 
@@ -63,7 +65,7 @@ export class CatalogBrowserComponent implements OnInit {
         assetId: contractOffer.asset.id,
         policy: contractOffer.policy,
       },
-      connectorId: 'yomama',
+      connectorId: 'connector-id',
       protocol: 'ids-multipart'
     };
 

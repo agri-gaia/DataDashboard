@@ -37,7 +37,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {SafePipe} from "./pipes/safe.pipe";
 import {ReplacePipe} from "./pipes/replace.pipe";
 import {AssetEditorDialog} from "./components/asset-editor-dialog/asset-editor-dialog.component";
-import {AssetViewerComponent} from "./components/asset-viewer/asset-viewer.component";
+import {PublishComponent} from "./components/asset-viewer/publish.component";
 
 import {PolicyViewComponent} from "./components/policy-view/policy-view.component";
 import {
@@ -76,7 +76,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     CatalogBrowserComponent,
     TransferHistoryViewerComponent,
     ContractDefinitionViewerComponent,
-    AssetViewerComponent,
+    PublishComponent,
     AssetEditorDialog,
     IntroductionComponent,
     ContractDefinitionEditorDialog,
@@ -97,7 +97,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     CatalogBrowserComponent,
     TransferHistoryViewerComponent,
     ContractDefinitionViewerComponent,
-    AssetViewerComponent,
+    PublishComponent,
     IntroductionComponent,
     PolicyRuleViewerComponent,
     IntroductionComponent,

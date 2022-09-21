@@ -1,5 +1,6 @@
 <div id="wrapper" *ngIf="filteredPolicies$ | async as policyDefinitions">
 <!--    entry fields for new policy-->
+  <h1 class="headline">{{titleService.getTitle()}}</h1>
   <div>
     <mat-form-field appearance="outline" class="search-form-field" color="accent">
       <mat-label>Search policies</mat-label>

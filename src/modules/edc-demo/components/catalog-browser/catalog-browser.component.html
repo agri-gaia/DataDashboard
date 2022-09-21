@@ -1,4 +1,5 @@
 <div *ngIf="filteredContractOffers$ | async as filteredContractOffers" id="wrapper">
+  <h1 class="headline">{{titleService.getTitle()}}</h1>
   <div>
     <mat-form-field class="search-form-field" color="accent">
       <mat-label>Search catalog</mat-label>
