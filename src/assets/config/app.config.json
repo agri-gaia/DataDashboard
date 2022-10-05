@@ -1,8 +1,35 @@
 {
-  "apiKey": "ApiKeyDefaultValue",
-  "catalogUrl": "http://localhost:8181/api/federatedcatalog",
-  "dataManagementApiUrl": "http://localhost:9191/api/v1/data",
-  "storageAccount": "company1assets",
-  "storageExplorerLinkTemplate": "storageexplorer://v=1",
-  "theme": "agri-gaia-theme"
+  "lmis": {
+    "id": "lmis",
+    "apiKey": "ApiKeyDefaultValue",
+    "catalogUrl": "http://localhost:8181/api/federatedcatalog",
+    "dataManagementApiUrl": "http://localhost:9191/api/v1/data",
+    "storageAccount": "company1assets",
+    "storageExplorerLinkTemplate": "storageexplorer://v=1",
+    "theme": "agri-gaia-theme",
+    "name": "LMIS",
+    "logo": "lmis.png"
+  },
+  "bosch": {
+    "id": "bosch",
+    "apiKey": "ApiKeyDefaultValue",
+    "catalogUrl": "http://localhost:8181/api/federatedcatalog",
+    "dataManagementApiUrl": "http://localhost:9191/api/v1/data",
+    "storageAccount": "company1assets",
+    "storageExplorerLinkTemplate": "storageexplorer://v=1",
+    "theme": "agri-gaia-theme",
+    "name": "Bosch",
+    "logo": "bosch.png"
+  },
+  "uni": {
+    "id": "uni",
+    "apiKey": "ApiKeyDefaultValue",
+    "catalogUrl": "http://localhost:8181/api/federatedcatalog",
+    "dataManagementApiUrl": "http://localhost:9191/api/v1/data",
+    "storageAccount": "company1assets",
+    "storageExplorerLinkTemplate": "storageexplorer://v=1",
+    "theme": "agri-gaia-theme",
+    "name": "Universität Osnabrück",
+    "logo": "uni.png"
+  }
 }

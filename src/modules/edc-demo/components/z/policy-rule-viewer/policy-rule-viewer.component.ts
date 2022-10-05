@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Rule} from "../../../edc-dmgmt-client/model/rule";
+import {Rule} from "../../../../edc-dmgmt-client/model/rule";
 
 @Component({
   selector: 'policy-rules',

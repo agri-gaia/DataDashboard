@@ -1,3 +1,5 @@
+@import "../../../styles/variables";
+
 .sidenav-container {
   height: 100%;
 }
@@ -11,15 +13,20 @@
   background: inherit;
 }
 
+.sidenav .mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-.toolbar{
+.toolbar {
   background: white;
-  box-shadow:  2px 0 8px 2px rgba(0, 25, 0, 0.1);
+  box-shadow: 2px 0 8px 2px rgba(0, 25, 0, 0.1);
 }
 
 .sidenav-content {
@@ -33,16 +40,36 @@
   display: flex;
   flex-direction: column;
 
-  .content{
-    background-color: white;
+  > :first-child {
+    height: 0;
+  }
 
+  > * {
     height: 100%;
-    margin: 30px;
-    padding: 30px;
-    border-radius: 6px;
   }
 }
 
 .logo-container .logo {
-  height: 44px;
+  height: 40px;
+  margin: 15px 5px 5px;
+}
+
+.links {
+  .mat-line {
+    font-weight: bold;
+  }
+
+  .router-link-active {
+    mat-list-item {
+      color: $accent;
+
+      mat-icon {
+        color: $accent;
+      }
+    }
+  }
+}
+
+.company-logo {
+  padding: 25px 0 0 25px;
 }

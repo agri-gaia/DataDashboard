@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {first, map, switchMap} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
-import {AssetEntryDto, AssetService,} from "../../../edc-dmgmt-client";
+import {AssetEntryDto, AssetService,} from "../../../../edc-dmgmt-client";
 import {AssetEditorDialog} from "../asset-editor-dialog/asset-editor-dialog.component";
-import {Asset} from "../../models/asset";
+import {Asset} from "../../../models/asset";
 import {ConfirmationDialogComponent, ConfirmDialogModel} from "../confirmation-dialog/confirmation-dialog.component";
-import {NotificationService} from "../../services/notification.service";
+import {NotificationService} from "../../../services/notification.service";
 
 @Component({
   selector: 'edc-demo-asset-viewer',

@@ -10,6 +10,7 @@ import {TransferProcessStates} from "../../models/transfer-process-states";
 import {ContractOffer} from "../../models/contract-offer";
 import {NegotiationResult} from "../../models/negotiation-result";
 import {Title} from "@angular/platform-browser";
+import {AssetDetailsComponent} from "./asset-details/asset-details.component";
 
 interface RunningTransferProcess {
   processId: string;
@@ -52,66 +53,11 @@ export class CatalogBrowserComponent implements OnInit {
         }));
   }
 
-  onSearch() {
+  onSearch(event: string) {
+    this.searchText = event;
     this.fetch$.next(null);
   }
 
-  onNegotiateClicked(contractOffer: ContractOffer) {
-    const initiateRequest: NegotiationInitiateRequestDto = {
-      connectorAddress: contractOffer.asset.originator,
-
-      offer: {
-        offerId: contractOffer.id,
-        assetId: contractOffer.asset.id,
-        policy: contractOffer.policy,
-      },
-      connectorId: 'connector-id',
-      protocol: 'ids-multipart'
-    };
-
-    const finishedNegotiationStates = [
-      "CONFIRMED",
-      "DECLINED",
-      "ERROR"];
-
-    this.apiService.initiateNegotiation(initiateRequest).subscribe(negotiationId => {
-      this.finishedNegotiations.delete(initiateRequest.offer.offerId);
-      this.runningNegotiations.set(initiateRequest.offer.offerId, {
-        id: negotiationId,
-        offerId: initiateRequest.offer.offerId
-      });
-
-      if (!this.pollingHandleNegotiation) {
-        // there are no active negotiations
-        this.pollingHandleNegotiation = setInterval(() => {
-          // const finishedNegotiations: NegotiationResult[] = [];
-
-          for (const negotiation of this.runningNegotiations.values()) {
-            this.apiService.getNegotiationState(negotiation.id).subscribe(updatedNegotiation => {
-              if (finishedNegotiationStates.includes(updatedNegotiation.state)) {
-                let offerId = negotiation.offerId;
-                this.runningNegotiations.delete(offerId);
-                if (updatedNegotiation.state === "CONFIRMED") {
-                  this.finishedNegotiations.set(offerId, updatedNegotiation);
-                  this.notificationService.showInfo("Contract Negotiation complete!", "Show me!", () => {
-                    this.router.navigate(['/contracts'])
-                  })
-                }
-              }
-
-              if (this.runningNegotiations.size === 0) {
-                clearInterval(this.pollingHandleNegotiation);
-                this.pollingHandleNegotiation = undefined;
-              }
-            });
-          }
-        }, 1000);
-      }
-    }, error => {
-      console.error(error);
-      this.notificationService.showError("Error starting negotiation");
-    });
-  }
 
   isBusy(contractOffer: ContractOffer) {
     return this.runningNegotiations.get(contractOffer.id) !== undefined || !!this.runningTransferProcesses.find(tp => tp.assetId === contractOffer.asset.id);
@@ -135,4 +81,11 @@ export class CatalogBrowserComponent implements OnInit {
     return this.finishedNegotiations.get(contractOffer.id) !== undefined;
   }
 
+  openDetails(contractOffer: ContractOffer) {
+    this.dialog.open(AssetDetailsComponent, {
+      data: contractOffer,
+      height: '80%',
+      width: '50%'
+    })
+  }
 }

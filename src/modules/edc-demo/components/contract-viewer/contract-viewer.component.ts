@@ -14,11 +14,12 @@ import {filter, first, map, switchMap, tap} from "rxjs/operators";
 import {NotificationService} from "../../services/notification.service";
 import {
   CatalogBrowserTransferDialog
-} from "../catalog-browser-transfer-dialog/catalog-browser-transfer-dialog.component";
+} from "../z/catalog-browser-transfer-dialog/catalog-browser-transfer-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {CatalogBrowserService} from "../../services/catalog-browser.service";
 import {Router} from "@angular/router";
 import {TransferProcessStates} from "../../models/transfer-process-states";
+import {Title} from "@angular/platform-browser";
 
 interface RunningTransferProcess {
   processId: string;
@@ -44,7 +45,8 @@ export class ContractViewerComponent implements OnInit {
               private transferService: TransferProcessService,
               private catalogService: CatalogBrowserService,
               private router: Router,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              public titleService: Title) {
   }
 
   private static isFinishedState(state: string): boolean {

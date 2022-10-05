@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Policy, PolicyDefinition} from "../../../edc-dmgmt-client";
+import {Policy, PolicyDefinition} from "../../../../edc-dmgmt-client";
 import TypeEnum = Policy.TypeEnum;
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 

@@ -5,9 +5,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {
   ContractDefinitionEditorDialog
 } from '../contract-definition-editor-dialog/contract-definition-editor-dialog.component';
-import {ContractDefinitionDto, ContractDefinitionService} from "../../../edc-dmgmt-client";
+import {ContractDefinitionDto, ContractDefinitionService} from "../../../../edc-dmgmt-client";
 import {ConfirmationDialogComponent, ConfirmDialogModel} from "../confirmation-dialog/confirmation-dialog.component";
-import {NotificationService} from "../../services/notification.service";
+import {NotificationService} from "../../../services/notification.service";
 
 
 @Component({

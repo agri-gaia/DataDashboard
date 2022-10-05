@@ -17,6 +17,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {AppConfigService} from "./app-config.service";
 import {API_KEY, CONNECTOR_CATALOG_API, CONNECTOR_DATAMANAGEMENT_API} from "../edc-dmgmt-client";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { CurrentUserComponent } from './components/navigation/current-user/current-user.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
   declarations: [
     AppComponent,
     NavigationComponent,
+    CurrentUserComponent,
   ],
   providers: [
     {

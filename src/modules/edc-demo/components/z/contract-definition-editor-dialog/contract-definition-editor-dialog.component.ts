@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AssetService, ContractDefinitionDto, PolicyDefinition, PolicyService} from "../../../edc-dmgmt-client";
+import {AssetService, ContractDefinitionDto, PolicyDefinition, PolicyService} from "../../../../edc-dmgmt-client";
 import {map} from "rxjs/operators";
-import {Asset} from "../../models/asset";
+import {Asset} from "../../../models/asset";
 
 
 @Component({

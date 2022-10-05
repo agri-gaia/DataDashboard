@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {TransferProcessDto, TransferProcessService} from "../../../edc-dmgmt-client";
 import {AppConfigService} from "../../../app/app-config.service";
-import {ConfirmationDialogComponent, ConfirmDialogModel} from "../confirmation-dialog/confirmation-dialog.component";
+import {ConfirmationDialogComponent, ConfirmDialogModel} from "../z/confirmation-dialog/confirmation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'edc-demo-transfer-history',
@@ -18,7 +19,8 @@ export class TransferHistoryViewerComponent implements OnInit {
 
   constructor(private transferProcessService: TransferProcessService,
               private dialog : MatDialog,
-              private appConfigService: AppConfigService) {
+              private appConfigService: AppConfigService,
+              public titleService: Title) {
   }
 
   ngOnInit(): void {
