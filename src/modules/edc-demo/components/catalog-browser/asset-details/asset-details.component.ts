@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ContractOffer} from "../../../models/contract-offer";
 import {ContractNegotiationDto, NegotiationInitiateRequestDto} from "../../../../edc-dmgmt-client";
 import {CatalogBrowserService} from "../../../services/catalog-browser.service";
@@ -21,7 +21,9 @@ export class AssetDetailsComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public contractOffer: ContractOffer,
               private apiService: CatalogBrowserService,
               private notificationService: NotificationService,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialogRef<AssetDetailsComponent>) {
+    console.log(contractOffer)
   }
 
   ngOnInit(): void {
@@ -57,24 +59,24 @@ export class AssetDetailsComponent implements OnInit {
         this.pollingHandleNegotiation = setInterval(() => {
           // const finishedNegotiations: NegotiationResult[] = [];
 
-            this.apiService.getNegotiationState(this.runningNegotiation!.id).subscribe(updatedNegotiation => {
-              if (finishedNegotiationStates.includes(updatedNegotiation.state)) {
-                let offerId = this.runningNegotiation!.offerId;
-                delete this.runningNegotiation;
+          this.apiService.getNegotiationState(this.runningNegotiation!.id).subscribe(updatedNegotiation => {
+            if (finishedNegotiationStates.includes(updatedNegotiation.state)) {
+              let offerId = this.runningNegotiation!.offerId;
+              delete this.runningNegotiation;
 
-                if (updatedNegotiation.state === "CONFIRMED") {
-                  this.finishedNegotiation = updatedNegotiation;
-                  this.notificationService.showInfo("Purchase complete!", "Show me!", () => {
-                    this.router.navigate(['/contracts'])
-                  })
-                }
+              if (updatedNegotiation.state === "CONFIRMED") {
+                this.finishedNegotiation = updatedNegotiation;
+                this.notificationService.showInfo("Purchase complete!", "Show me!", () => {
+                  this.router.navigate(['/contracts'])
+                })
               }
+            }
 
-              if (!this.runningNegotiation) {
-                clearInterval(this.pollingHandleNegotiation);
-                this.pollingHandleNegotiation = undefined;
-              }
-            });
+            if (!this.runningNegotiation) {
+              clearInterval(this.pollingHandleNegotiation);
+              this.pollingHandleNegotiation = undefined;
+            }
+          });
         }, 1000);
       }
     }, error => {
@@ -91,5 +93,4 @@ export class AssetDetailsComponent implements OnInit {
   isNegotiated(contractOffer: ContractOffer) {
     return false
   }
-
 }

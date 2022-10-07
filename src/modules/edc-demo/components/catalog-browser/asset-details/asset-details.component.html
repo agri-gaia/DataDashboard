@@ -1,17 +1,16 @@
 <div fxLayout="column" style="height: 100%">
-  <h2>{{contractOffer.asset.name}}</h2>
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="header">
+    <h1>{{contractOffer.asset.name}}</h1>
+    <button mat-icon-button (click)="this.dialog.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="column">
+    <h2>Asset Details</h2>
+  </div>
   <div fxLayout="row" fxLayoutAlign="space-around">
-    <mat-list dense>
-      <mat-list-item>
-        <mat-icon mat-list-icon>policy</mat-icon>
-        <div mat-line class="asset-property-name">Policy</div>
-        <div mat-line>{{contractOffer.asset.policyId}}</div>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon mat-list-icon>category</mat-icon>
-        <div class="asset-property-name" mat-line>Typ</div>
-        <div mat-line>{{contractOffer.asset.type}}</div>
-      </mat-list-item>
+
+    <mat-list dense class="list">
       <mat-list-item>
         <mat-icon mat-list-icon>key</mat-icon>
         <div class="asset-property-name" mat-line>Id</div>
@@ -22,13 +21,14 @@
         <div class="asset-property-name" mat-line>Version</div>
         <div mat-line>{{contractOffer.asset.version}}</div>
       </mat-list-item>
-    </mat-list>
-    <mat-list dense>
       <mat-list-item *ngIf="contractOffer.asset.contentType">
         <mat-icon mat-list-icon>content_paste</mat-icon>
         <div class="asset-property-name" mat-line>Content-Type</div>
         <div mat-line>{{contractOffer.asset.contentType}}</div>
       </mat-list-item>
+    </mat-list>
+    <mat-list dense class="list">
+
       <mat-list-item *ngIf="contractOffer.asset.originator">
         <mat-icon mat-list-icon>link</mat-icon>
         <div class="asset-property-name" mat-line>Originator</div>
@@ -46,8 +46,42 @@
       </mat-list-item>
     </mat-list>
   </div>
+  <mat-divider class="divider"></mat-divider>
+  <div fxLayout="column">
+    <h2>Policy Details</h2>
+    <div fxLayout="row" fxLayoutAlign="space-around">
+      <mat-list dense class="list">
+        <mat-list-item>
+          <mat-icon mat-list-icon>policy</mat-icon>
+          <div mat-line class="asset-property-name">Policy ID</div>
+          <div mat-line>{{contractOffer.asset.policyId}}</div>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>category</mat-icon>
+          <div class="asset-property-name" mat-line>Target</div>
+          <div mat-line>{{contractOffer.policy.target}}</div>
+        </mat-list-item>
+      </mat-list>
+      <mat-list dense class="list">
+        <mat-list-item>
+          <mat-icon mat-list-icon>key</mat-icon>
+          <div class="asset-property-name" mat-line>Verpflichtungen</div>
+          <div mat-line>{{contractOffer.policy.obligations}}</div>
+        </mat-list-item>
+        <mat-list-item >
+          <mat-icon mat-list-icon>numbers</mat-icon>
+          <div class="asset-property-name" mat-line >Permissions</div>
+          <div mat-line *ngFor="let permission of contractOffer.policy!.permissions!">{{permission.uid}}</div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+
+  <mat-divider class="divider"></mat-divider>
   <div fxFlex="grow">
-    <iframe src="http://aims.fao.org/aos/agrovoc/c_8309.html" style="height: 100%; width: 100%"></iframe>
+<!--    Only if there the subject has a reference to the agrovoc -->
+    <h2>Agrovoc Definition</h2>
+    <iframe src="http://aims.fao.org/aos/agrovoc/c_8309.html" style="height: calc(100% - 50px); width: 100%"></iframe>
   </div>
   <div class="footer" fxLayout="column">
     <mat-progress-bar mode="indeterminate" *ngIf="runningNegotiation" [ngStyle]="runningNegotiation?{'color':'white'} : {}"></mat-progress-bar>

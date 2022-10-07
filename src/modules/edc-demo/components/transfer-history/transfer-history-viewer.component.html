@@ -3,15 +3,15 @@
 <div class="content">
   <h1 class="headline">{{titleService.getTitle()}}</h1>
   <div id="wrapper">
-    <mat-card>
-      <div class="info-box">
-        <mat-icon>info</mat-icon>
-        <span class="text">Please install Storage Explorer for visualizing files transferred to Azure Blob Storage</span>
-        <span class="button">
-          <a mat-stroked-button href="https://azure.microsoft.com/features/storage-explorer/" color="accent">Install Azure Storage Explorer</a>
-        </span>
-      </div>
-    </mat-card>
+<!--    <mat-card>-->
+<!--      <div class="info-box">-->
+<!--        <mat-icon>info</mat-icon>-->
+<!--        <span class="text">Please install Storage Explorer for visualizing files transferred to Azure Blob Storage</span>-->
+<!--        <span class="button">-->
+<!--          <a mat-stroked-button href="https://azure.microsoft.com/features/storage-explorer/" color="accent">Install Azure Storage Explorer</a>-->
+<!--        </span>-->
+<!--      </div>-->
+<!--    </mat-card>-->
 
     <div *ngIf="transferProcesses$ | async as transferProcesses">
       <button mat-stroked-button (click)="loadTransferProcesses()" color="accent">
@@ -28,17 +28,17 @@
         </ng-container>
 
         <ng-container matColumnDef="creationDate">
-          <th mat-header-cell *matHeaderCellDef scope="col">Created</th>
+          <th mat-header-cell *matHeaderCellDef scope="col">Erstellt</th>
           <td mat-cell *matCellDef="let item">{{asDate(item.createdTimestamp)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="state">
-          <th mat-header-cell *matHeaderCellDef scope="col">State</th>
+          <th mat-header-cell *matHeaderCellDef scope="col">Status</th>
           <td mat-cell *matCellDef="let item">{{item.state}}</td>
         </ng-container>
 
         <ng-container matColumnDef="lastUpdated">
-          <th mat-header-cell *matHeaderCellDef scope="col">Last updated</th>
+          <th mat-header-cell *matHeaderCellDef scope="col">Letztes Update</th>
           <td mat-cell *matCellDef="let item">{{asDate(item.stateTimestamp)}}</td>
         </ng-container>
 
@@ -58,16 +58,16 @@
         </ng-container>
 
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef scope="col">Actions</th>
+          <th mat-header-cell *matHeaderCellDef scope="col" >Actions</th>
           <td mat-cell *matCellDef="let item" class="singleline-cell">
             <a *ngIf="showStorageExplorerLink(item)" mat-stroked-button mat-button color="accent"
                [href]="storageExplorerLinkTemplate | replace: item.dataDestination.properties | safe: 'url'" class="action-button">
               <mat-icon>loupe</mat-icon>
               Open Storage Explorer
             </a>
-            <button *ngIf="showDeprovisionButton(item)" (click)="onDeprovision(item)" color="warn" mat-stroked-button class="action-button">
+            <button *ngIf="showDeprovisionButton(item)" disabled color="warn" mat-button class="action-button">
               <mat-icon>cancel_presentation</mat-icon>
-              Deprovision
+
             </button>
           </td>
         </ng-container>
