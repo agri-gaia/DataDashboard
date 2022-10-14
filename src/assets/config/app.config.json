@@ -3,7 +3,7 @@
     "id": "lmis",
     "apiKey": "ApiKeyDefaultValue",
     "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
-    "dataManagementApiUrl": "http://localhost:9191/api/v1/data",
+    "dataManagementApiUrl": "https://bosch-lmis-connector-api.platform.agri-gaia.com/api/v1/data",
     "theme": "agri-gaia-theme",
     "name": "LMIS",
     "logo": "lmis.png"
@@ -17,8 +17,8 @@
     "name": "Bosch",
     "logo": "bosch.png"
   },
-  "uni": {
-    "id": "uni",
+  "hsos": {
+    "id": "hsos",
     "apiKey": "ApiKeyDefaultValue",
     "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
     "dataManagementApiUrl": "http://localhost:9193/api/v1/data",
