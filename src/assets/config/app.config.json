@@ -3,9 +3,7 @@
     "id": "lmis",
     "apiKey": "ApiKeyDefaultValue",
     "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
-    "dataManagementApiUrl": "https://marktplatz-connector-api.platform.agri-gaia.com/api/v1/data",
-    "storageAccount": "company1assets",
-    "storageExplorerLinkTemplate": "storageexplorer://v=1",
+    "dataManagementApiUrl": "http://localhost:9191/api/v1/data",
     "theme": "agri-gaia-theme",
     "name": "LMIS",
     "logo": "lmis.png"
@@ -13,10 +11,8 @@
   "bosch": {
     "id": "bosch",
     "apiKey": "ApiKeyDefaultValue",
-    "catalogUrl": "http://localhost:8182/api/federatedcatalog",
+    "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
     "dataManagementApiUrl": "http://localhost:9192/api/v1/data",
-    "storageAccount": "company2assets",
-    "storageExplorerLinkTemplate": "storageexplorer://v=1",
     "theme": "agri-gaia-theme",
     "name": "Bosch",
     "logo": "bosch.png"
@@ -24,12 +20,10 @@
   "uni": {
     "id": "uni",
     "apiKey": "ApiKeyDefaultValue",
-    "catalogUrl": "http://localhost:8183/api/federatedcatalog",
+    "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
     "dataManagementApiUrl": "http://localhost:9193/api/v1/data",
-    "storageAccount": "company3assets",
-    "storageExplorerLinkTemplate": "storageexplorer://v=1",
     "theme": "agri-gaia-theme",
-    "name": "Universität Osnabrück",
-    "logo": "uni.png"
+    "name": "Hochschule Osnabrück",
+    "logo": "hsos.png"
   }
 }
