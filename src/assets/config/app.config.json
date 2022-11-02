@@ -2,8 +2,8 @@
   "lmis": {
     "id": "lmis",
     "apiKey": "ApiKeyDefaultValue",
-    "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
-    "dataManagementApiUrl": "https://bosch-lmis-connector-api.platform.agri-gaia.com/api/v1/data",
+    "catalogUrl": "http://localhost:8181/api/federatedcatalog",
+    "dataManagementApiUrl": "http://localhost:9191/api/v1/data",
     "theme": "agri-gaia-theme",
     "name": "LMIS",
     "logo": "lmis.png"
@@ -11,7 +11,7 @@
   "bosch": {
     "id": "bosch",
     "apiKey": "ApiKeyDefaultValue",
-    "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
+    "catalogUrl": "http://localhost:8181/api/federatedcatalog/",
     "dataManagementApiUrl": "http://localhost:9192/api/v1/data",
     "theme": "agri-gaia-theme",
     "name": "Bosch",
@@ -20,7 +20,7 @@
   "hsos": {
     "id": "hsos",
     "apiKey": "ApiKeyDefaultValue",
-    "catalogUrl": "https://marktplatz-connector.platform.agri-gaia.com/api/federatedcatalog",
+    "catalogUrl": "http://localhost:8181/api/federatedcatalog",
     "dataManagementApiUrl": "http://localhost:9193/api/v1/data",
     "theme": "agri-gaia-theme",
     "name": "Hochschule Osnabrück",

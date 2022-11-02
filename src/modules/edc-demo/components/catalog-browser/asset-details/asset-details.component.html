@@ -17,6 +17,11 @@
         <div mat-line>{{contractOffer.asset.id}}</div>
       </mat-list-item>
       <mat-list-item>
+        <mat-icon mat-list-icon>list</mat-icon>
+        <div class="asset-property-name" mat-line>Beschreibung</div>
+        <div mat-line>{{contractOffer.asset.description}}</div>
+      </mat-list-item>
+      <mat-list-item>
         <mat-icon mat-list-icon>numbers</mat-icon>
         <div class="asset-property-name" mat-line>Version</div>
         <div mat-line>{{contractOffer.asset.version}}</div>
@@ -26,6 +31,7 @@
         <div class="asset-property-name" mat-line>Content-Type</div>
         <div mat-line>{{contractOffer.asset.contentType}}</div>
       </mat-list-item>
+
     </mat-list>
     <mat-list dense class="list">
 
