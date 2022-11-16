@@ -1,10 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {
-  AssetDto,
   AssetService,
   ContractAgreementDto,
   ContractAgreementService,
-  TransferId, TransferProcessDto,
+  TransferId,
   TransferProcessService,
   TransferRequestDto
 } from "../../../edc-dmgmt-client";
@@ -14,7 +13,7 @@ import {filter, first, map, switchMap, tap} from "rxjs/operators";
 import {NotificationService} from "../../services/notification.service";
 import {
   CatalogBrowserTransferDialog
-} from "../z/catalog-browser-transfer-dialog/catalog-browser-transfer-dialog.component";
+} from "../../components/catalog-browser-transfer-dialog/catalog-browser-transfer-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {CatalogBrowserService} from "../../services/catalog-browser.service";
 import {Router} from "@angular/router";
@@ -78,10 +77,7 @@ export class ContractViewerComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(first()).subscribe(result => {
       const storageTypeId: string = result.storageTypeId;
-      if (storageTypeId !== 'AzureStorage') {
-        this.notificationService.showError("Only storage type \"AzureStorage\" is implemented currently!")
-        return;
-      }
+
       this.createTransferRequest(contract, storageTypeId)
         .pipe(switchMap(trq => this.transferService.initiateTransfer(trq)))
         .subscribe(transferId => {
