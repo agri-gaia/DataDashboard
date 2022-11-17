@@ -21,7 +21,7 @@
     "id": "hsos",
     "apiKey": "password",
     "catalogUrl": "http://20.101.230.231:8181/api/federatedcatalog",
-    "dataManagementApiUrl": "https://edc-provider.semantic.agri-gaia.edvsz.hs-osnabrueck.de/api/v1",
+    "dataManagementApiUrl": "https://edc-provider.semantic.agri-gaia.edvsz.hs-osnabrueck.de/api/v1/data",
     "theme": "agri-gaia-theme",
     "name": "Hochschule Osnabrück",
     "logo": "hsos.png"
