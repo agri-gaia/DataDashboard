@@ -31,14 +31,10 @@ export class CatalogBrowserComponent implements OnInit {
   runningNegotiations: Map<string, NegotiationResult> = new Map<string, NegotiationResult>(); // contractOfferId, NegotiationResult
   finishedNegotiations: Map<string, ContractNegotiationDto> = new Map<string, ContractNegotiationDto>(); // contractOfferId, contractAgreementId
   private fetch$ = new BehaviorSubject(null);
-  private pollingHandleNegotiation?: any;
 
   constructor(private apiService: CatalogBrowserService,
               public dialog: MatDialog,
-              private router: Router,
-              private notificationService: NotificationService,
-              public titleService: Title,
-              @Inject('HOME_CONNECTOR_STORAGE_ACCOUNT') private homeConnectorStorageAccount: string) {
+              public titleService: Title) {
   }
 
   ngOnInit(): void {

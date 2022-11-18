@@ -58,15 +58,11 @@ import { CurrentUserComponent } from './components/navigation/current-user/curre
       deps: [AppConfigService]
     },
     {
-      provide: 'HOME_CONNECTOR_STORAGE_ACCOUNT',
-      useFactory: (s: AppConfigService) => s.getConfig()?.storageAccount,
+      provide: 'HOME_CONNECTOR_STORAGES',
+      useFactory: (s: AppConfigService) => s.getConfig()?.storages,
       deps: [AppConfigService]
     },
     {provide: API_KEY, useFactory: (s: AppConfigService) => s.getConfig()?.apiKey, deps: [AppConfigService]},
-    {
-      provide: 'STORAGE_TYPES',
-      useFactory: () => [{id: "MinIO", name: "MinIO"}],
-    },
   ],
   bootstrap: [AppComponent]
 })

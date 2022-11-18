@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   AssetService,
   ContractAgreementDto,
@@ -40,7 +40,6 @@ export class ContractViewerComponent implements OnInit {
   constructor(private contractAgreementService: ContractAgreementService,
               private assetService: AssetService,
               public dialog: MatDialog,
-              @Inject('HOME_CONNECTOR_STORAGE_ACCOUNT') private homeConnectorStorageAccount: string,
               private transferService: TransferProcessService,
               private catalogService: CatalogBrowserService,
               private router: Router,
@@ -60,7 +59,7 @@ export class ContractViewerComponent implements OnInit {
   }
 
   asDate(epochSeconds?: number): string {
-    if(epochSeconds){
+    if (epochSeconds) {
       const d = new Date(0);
       d.setUTCSeconds(epochSeconds);
       return d.toLocaleDateString();
@@ -73,12 +72,13 @@ export class ContractViewerComponent implements OnInit {
   }
 
   onTransferClicked(contract: ContractAgreementDto) {
-    const dialogRef = this.dialog.open(CatalogBrowserTransferDialog);
+    const dialogRef = this.dialog.open(CatalogBrowserTransferDialog, {width: "30em"});
 
     dialogRef.afterClosed().pipe(first()).subscribe(result => {
-      const storageTypeId: string = result.storageTypeId;
-
-      this.createTransferRequest(contract, storageTypeId)
+      if (!result) {
+        return;
+      }
+      this.createTransferRequest(contract, result)
         .pipe(switchMap(trq => this.transferService.initiateTransfer(trq)))
         .subscribe(transferId => {
           this.startPolling(transferId, contract.id!);
@@ -93,7 +93,8 @@ export class ContractViewerComponent implements OnInit {
     return !!this.runningTransfers.find(rt => rt.contractId === contractId);
   }
 
-  private createTransferRequest(contract: ContractAgreementDto, storageTypeId: string): Observable<TransferRequestDto> {
+
+  private createTransferRequest(contract: ContractAgreementDto, storageProperties: any): Observable<TransferRequestDto> {
     return this.getOfferedAssetForId(contract.assetId!).pipe(map(offeredAsset => {
       return {
         assetId: offeredAsset.id,
@@ -101,9 +102,7 @@ export class ContractViewerComponent implements OnInit {
         connectorId: "consumer", //doesn't matter, but cannot be null
         dataDestination: {
           properties: {
-            "type": storageTypeId,
-            account: this.homeConnectorStorageAccount, // CAUTION: hardcoded value for AzureBlob
-            // container: omitted, so it will be auto-assigned by the EDC runtime
+            ...storageProperties,
           }
         },
         managedResources: true,

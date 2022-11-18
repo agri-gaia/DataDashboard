@@ -9,11 +9,8 @@ import {AppConfig, AppConfigService} from "../../../../app/app-config.service";
 })
 export class ContextSwitcherComponent implements OnInit {
 
-  appConfigs: any;
-
-  get configIds() {
-    return Object.keys(this.appConfigs);
-  }
+  appConfigs!: AppConfig[];
+  currentConfig!: AppConfig
 
   platformForm = new FormControl();
 
@@ -21,9 +18,10 @@ export class ContextSwitcherComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.configService.getAllConfigs().subscribe(c => {
-      this.appConfigs = c;
-      this.platformForm.patchValue(this.configService.getConfig()!.id)
+    this.configService.getAllConfigs().subscribe(configs => {
+      this.appConfigs = configs;
+      this.currentConfig = this.configService.getConfig()!;
+      this.platformForm.patchValue(this.currentConfig!.id);
       this.platformForm.valueChanges.subscribe((v: string) => {
         this.configService.setCurId(v)
       })
