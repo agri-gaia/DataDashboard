@@ -93,4 +93,33 @@ export class AssetDetailsComponent implements OnInit {
   isNegotiated(contractOffer: ContractOffer) {
     return false
   }
+
+  nameLookupDir: any = {
+    byteSize: 'Byte Größe',
+    theme: 'Agrovoc Kontext',
+    fileName: 'Dateiname',
+    spatial: 'Ort',
+    temporal: 'Zeitraum',
+  };
+
+  parsePropertyName(name: string) {
+    let nameLookupDirElement = this.nameLookupDir[name];
+    return nameLookupDirElement ?? name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  iconLookupDir: any = {
+    byteSize: 'storage',
+    theme: 'category',
+    fileName: 'drive_file_rename_outline',
+    spatial: 'location_on',
+    temporal: 'date_range',
+  };
+
+  getPropertyIcon(name: string) {
+    let nameLookupDirElement = this.iconLookupDir[name];
+    console.log(name)
+    console.log(nameLookupDirElement)
+
+    return nameLookupDirElement ?? 'list';
+  }
 }
