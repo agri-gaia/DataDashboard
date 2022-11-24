@@ -6,7 +6,6 @@ import {CatalogBrowserService} from "../../../services/catalog-browser.service";
 import {NegotiationResult} from "../../../models/negotiation-result";
 import {NotificationService} from "../../../services/notification.service";
 import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-asset-details',
@@ -19,23 +18,15 @@ export class AssetDetailsComponent implements OnInit {
   finishedNegotiation?: ContractNegotiationDto;
   private pollingHandleNegotiation?: any;
 
-  subjects: string[] = [];
-  location?: string;
-
   constructor(@Inject(MAT_DIALOG_DATA) public contractOffer: ContractOffer,
               private apiService: CatalogBrowserService,
               private notificationService: NotificationService,
               private router: Router,
-              public dialog: MatDialogRef<AssetDetailsComponent>,
-              private http: HttpClient) {
+              public dialog: MatDialogRef<AssetDetailsComponent>) {
 
   }
 
   ngOnInit(): void {
-    // @ts-ignore
-    let themes: string[] = this.contractOffer.asset.properties.theme;
-    themes.forEach(theme => this.http.get(`${theme}.rdf`).subscribe(r => console.log(r)));
-    this.http.get(`${this.contractOffer.asset.properties.spatial}.rdf`).subscribe(r => console.log(r));
   }
 
 
@@ -75,9 +66,10 @@ export class AssetDetailsComponent implements OnInit {
 
               if (updatedNegotiation.state === "CONFIRMED") {
                 this.finishedNegotiation = updatedNegotiation;
-                this.notificationService.showInfo("Purchase complete!", "Show me!", () => {
+                this.notificationService.showInfo("Der Kauf wurde erfolgreich abgeschlossen", "Zu meinen Käufen", () => {
                   this.router.navigate(['/contracts'])
                 })
+                this.dialog.close();
               }
             }
 
