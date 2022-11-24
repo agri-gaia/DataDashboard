@@ -6,6 +6,7 @@ import {CatalogBrowserService} from "../../../services/catalog-browser.service";
 import {NegotiationResult} from "../../../models/negotiation-result";
 import {NotificationService} from "../../../services/notification.service";
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-asset-details',
@@ -18,15 +19,23 @@ export class AssetDetailsComponent implements OnInit {
   finishedNegotiation?: ContractNegotiationDto;
   private pollingHandleNegotiation?: any;
 
+  subjects: string[] = [];
+  location?: string;
+
   constructor(@Inject(MAT_DIALOG_DATA) public contractOffer: ContractOffer,
               private apiService: CatalogBrowserService,
               private notificationService: NotificationService,
               private router: Router,
-              public dialog: MatDialogRef<AssetDetailsComponent>) {
-    console.log(contractOffer)
+              public dialog: MatDialogRef<AssetDetailsComponent>,
+              private http: HttpClient) {
+
   }
 
   ngOnInit(): void {
+    // @ts-ignore
+    let themes: string[] = this.contractOffer.asset.properties.theme;
+    themes.forEach(theme => this.http.get(`${theme}.rdf`).subscribe(r => console.log(r)));
+    this.http.get(`${this.contractOffer.asset.properties.spatial}.rdf`).subscribe(r => console.log(r));
   }
 
 
@@ -92,34 +101,5 @@ export class AssetDetailsComponent implements OnInit {
 
   isNegotiated(contractOffer: ContractOffer) {
     return false
-  }
-
-  nameLookupDir: any = {
-    byteSize: 'Byte Größe',
-    theme: 'Agrovoc Kontext',
-    fileName: 'Dateiname',
-    spatial: 'Ort',
-    temporal: 'Zeitraum',
-  };
-
-  parsePropertyName(name: string) {
-    let nameLookupDirElement = this.nameLookupDir[name];
-    return nameLookupDirElement ?? name.charAt(0).toUpperCase() + name.slice(1);
-  }
-
-  iconLookupDir: any = {
-    byteSize: 'storage',
-    theme: 'category',
-    fileName: 'drive_file_rename_outline',
-    spatial: 'location_on',
-    temporal: 'date_range',
-  };
-
-  getPropertyIcon(name: string) {
-    let nameLookupDirElement = this.iconLookupDir[name];
-    console.log(name)
-    console.log(nameLookupDirElement)
-
-    return nameLookupDirElement ?? 'list';
   }
 }

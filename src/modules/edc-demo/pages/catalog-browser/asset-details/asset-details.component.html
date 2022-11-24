@@ -8,7 +8,7 @@
   <div fxLayout="column">
     <h2>Asset Details</h2>
   </div>
-  <mat-list dense class="list" fxLayout="row wrap">
+  <mat-list dense class="catalogue-meta-data-list" fxLayout="row wrap">
     <mat-list-item>
       <mat-icon mat-list-icon>fingerprint</mat-icon>
       <div class="asset-property-name" mat-line>Id</div>
@@ -36,16 +36,31 @@
       <div mat-line>{{contractOffer.asset.originator}}</div>
     </mat-list-item>
 
-
-    <mat-list-item *ngFor="let additionalPropertyKey of contractOffer.asset.additionalPropertyKeys">
-      <mat-icon *ngIf="additionalPropertyKey.replace('asset:prop:', '') as name" mat-list-icon>{{getPropertyIcon(name)}}</mat-icon>
-      <div *ngIf="additionalPropertyKey.replace('asset:prop:', '') as name"
-           class="asset-property-name"
-           mat-line>
-        {{ parsePropertyName(name)}}
-      </div>
-      <div mat-line title="{{contractOffer.asset.properties[additionalPropertyKey]}}">
-        {{contractOffer.asset.properties[additionalPropertyKey]}}</div>
+    <mat-list-item>
+      <mat-icon mat-list-icon>storage</mat-icon>
+      <div class="asset-property-name" mat-line>Byte Größe</div>
+      <div mat-line>{{contractOffer.asset.properties?.byteSize ?? '- -'}}</div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>drive_file_rename_outline</mat-icon>
+      <div class="asset-property-name" mat-line>Dateiname</div>
+      <div mat-line>{{contractOffer.asset.name ?? '- -'}}</div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>date_range</mat-icon>
+      <div class="asset-property-name" mat-line>Zeitraum</div>
+      <div mat-line>{{contractOffer.asset.properties.temporal ?? '- -'}}</div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>category</mat-icon>
+      <div class="asset-property-name" mat-line>Agrovoc Kontext</div>
+      <div mat-line *ngFor="let theme of contractOffer.asset.properties.theme">{{theme}}</div>
+      <div mat-line *ngIf="contractOffer.asset.properties.theme?.length === 0">- -</div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>location_on</mat-icon>
+      <div class="asset-property-name" mat-line>Ort</div>
+      <div mat-line>{{contractOffer.asset.properties?.spatial ?? '- -'}}</div>
     </mat-list-item>
   </mat-list>
   <mat-divider class="divider"></mat-divider>
@@ -53,26 +68,27 @@
     <h2>Policy Details</h2>
   </div>
 
-  <mat-list dense class="list" fxLayout="row wrap">
+  <mat-list dense class="catalogue-meta-data-list" fxLayout="row wrap">
     <mat-list-item>
       <mat-icon mat-list-icon>policy</mat-icon>
       <div mat-line class="asset-property-name">Policy ID</div>
-      <div mat-line>{{contractOffer.asset.policyId}}</div>
+      <div mat-line>{{contractOffer.asset.policyId ?? '- -'}}</div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>category</mat-icon>
       <div class="asset-property-name" mat-line>Target</div>
-      <div mat-line>{{contractOffer.policy.target}}</div>
+      <div mat-line>{{contractOffer.policy.target ?? '- -'}}</div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>key</mat-icon>
       <div class="asset-property-name" mat-line>Verpflichtungen</div>
-      <div mat-line>{{contractOffer.policy.obligations}}</div>
+      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{obligation.action?.type}} {{obligation.target}}</div>
+      <div mat-line *ngIf="contractOffer.policy.obligations?.length === 0">- -</div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>numbers</mat-icon>
       <div class="asset-property-name" mat-line>Permissions</div>
-      <div mat-line *ngFor="let permission of contractOffer.policy!.permissions!">{{permission.uid}}</div>
+      <div mat-line *ngFor="let permission of contractOffer.policy!.permissions!">{{permission?.action?.type}} {{permission.target}}</div>
     </mat-list-item>
   </mat-list>
 

@@ -42,3 +42,12 @@ body {
   padding: 30px;
   border-radius: 6px;
 }
+
+.catalogue-meta-data-list {
+  mat-list-item {
+    flex: 1 1 50%;
+    span {
+      place-items: flex-start !important;
+    }
+  }
+}
