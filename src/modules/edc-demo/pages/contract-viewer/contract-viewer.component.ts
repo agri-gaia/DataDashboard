@@ -7,7 +7,7 @@ import {
   TransferProcessService,
   TransferRequestDto
 } from "../../../edc-dmgmt-client";
-import {from, Observable, of} from "rxjs";
+import { from, Observable, of} from "rxjs";
 import {Asset} from "../../models/asset";
 import {filter, first, map, switchMap, tap} from "rxjs/operators";
 import {NotificationService} from "../../services/notification.service";
@@ -19,6 +19,8 @@ import {CatalogBrowserService} from "../../services/catalog-browser.service";
 import {Router} from "@angular/router";
 import {TransferProcessStates} from "../../models/transfer-process-states";
 import {Title} from "@angular/platform-browser";
+import { AuthenticationService } from 'src/modules/app/core/authentication/authentication.service';
+import { HttpClient } from '@angular/common/http';
 
 interface RunningTransferProcess {
   processId: string;
@@ -36,6 +38,8 @@ export class ContractViewerComponent implements OnInit {
   contracts$: Observable<ContractAgreementDto[]> = of([]);
   private runningTransfers: RunningTransferProcess[] = [];
   private pollingHandleTransfer?: any;
+  public userName: string = "";
+  public dataConnectorUrl: string = "";
 
   constructor(private contractAgreementService: ContractAgreementService,
               private assetService: AssetService,
@@ -44,6 +48,8 @@ export class ContractViewerComponent implements OnInit {
               private catalogService: CatalogBrowserService,
               private router: Router,
               private notificationService: NotificationService,
+              private authenticationService: AuthenticationService,
+              protected httpClient: HttpClient,
               public titleService: Title) {
   }
 
@@ -59,6 +65,13 @@ export class ContractViewerComponent implements OnInit {
     // consumers and provider IDs are properly set during the contract agreement.
     this.contracts$ = this.contractAgreementService.getAllAgreements()
       .pipe(map(a => a.filter(b=> b.assetId.includes("urn:artifact"))));
+
+      this.authenticationService.userProfile$.subscribe(userProfile => {
+        if (!userProfile) {
+          throw new Error('UserProfile is null or undefined.');
+        }
+        this.dataConnectorUrl = userProfile.dataConnectorUrl;
+        })
   }
 
   asDate(epochSeconds?: number): string {
@@ -98,6 +111,7 @@ export class ContractViewerComponent implements OnInit {
 
 
   private createTransferRequest(contract: ContractAgreementDto, storageProperties: any): Observable<TransferRequestDto> {
+
     return this.getOfferedAssetForId(contract.assetId!).pipe(map(offeredAsset => {
       return {
         assetId: offeredAsset.id,
@@ -106,6 +120,8 @@ export class ContractViewerComponent implements OnInit {
         dataDestination: {
           properties: {
             ...storageProperties,
+            type: "AmazonS3",
+            region: "us-east-1"
           }
         },
         managedResources: true,

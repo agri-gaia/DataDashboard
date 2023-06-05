@@ -1,7 +1,7 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {StorageOption} from "../../../app/app-config.service";
 import {FormBuilder, Validators} from "@angular/forms";
+import { AuthenticationService } from 'src/modules/app/core/authentication/authentication.service';
 
 
 @Component({
@@ -9,15 +9,30 @@ import {FormBuilder, Validators} from "@angular/forms";
   templateUrl: './catalog-browser-transfer-dialog.component.html',
   styleUrls: ['./catalog-browser-transfer-dialog.component.scss']
 })
-export class CatalogBrowserTransferDialog {
+export class CatalogBrowserTransferDialog implements OnInit {
+  endpoint = '';
+  form = this.fb.group({
+    bucketName: [,[Validators.required]],
+    endpoint: [this.endpoint,[Validators.required]],
+    assetName: [,[Validators.required]]
+  });
 
-  storageType?: StorageOption;
-  form = this.fb.group({});
-
-  constructor(@Inject('HOME_CONNECTOR_STORAGES') public storageTypes: StorageOption[],
+  constructor(
               private dialogRef: MatDialogRef<CatalogBrowserTransferDialog>,
               private fb: FormBuilder,
+              private authenticationService: AuthenticationService,
               @Inject(MAT_DIALOG_DATA) contractDefinition?: any) {
+
+  }
+
+  public ngOnInit(): void {
+    this.authenticationService.userProfile$.subscribe(userProfile => {
+      if (!userProfile) {
+        throw new Error('UserProfile is null or undefined.');
+      }
+      this.endpoint = userProfile.storageEndpoint;
+      this.form.get('endpoint')?.setValue(this.endpoint);
+      })
   }
 
   onTransfer() {
@@ -25,7 +40,6 @@ export class CatalogBrowserTransferDialog {
       return;
     }
     let dialogResult = {
-      ...this.storageType,
       ...this.form.value
     };
     delete dialogResult.additionalTextFields;
@@ -34,10 +48,4 @@ export class CatalogBrowserTransferDialog {
 
   }
 
-  changed(storageOption: StorageOption) {
-    this.form = this.fb.group({});
-    storageOption.additionalTextFields.forEach(field => {
-      this.form.addControl(field.id, this.fb.control("", [Validators.required]))
-    })
-  }
 }

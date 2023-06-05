@@ -14,11 +14,28 @@ import {MatListModule} from '@angular/material/list';
 import {NavigationComponent} from './components/navigation/navigation.component';
 import {EdcDemoModule} from '../edc-demo/edc-demo.module';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
-import {AppConfigService} from "./app-config.service";
-import {API_KEY, BACKEND_URL, CONNECTOR_DATAMANAGEMENT_API,} from "../edc-dmgmt-client";
+import {API_KEY, BACKEND_URL} from "../edc-dmgmt-client";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {CurrentUserComponent} from './components/navigation/current-user/current-user.component';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { environment } from "src/environments/environment"
 
+
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'https://account.platform.agri-gaia.com',
+        realm: 'agri-gaia-marketplace',
+        clientId: 'ag-test-marktplatz'
+      },
+      initOptions: {
+        onLoad: 'login-required',
+      },
+      enableBearerInterceptor: true,
+      bearerPrefix: 'Bearer',
+    });
+}
 
 @NgModule({
   imports: [
@@ -32,33 +49,23 @@ import {CurrentUserComponent} from './components/navigation/current-user/current
     MatIconModule,
     MatListModule,
     EdcDemoModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    KeycloakAngularModule
   ],
   declarations: [
     AppComponent,
     NavigationComponent,
-    CurrentUserComponent,
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: (configService: AppConfigService) => () => configService.loadConfig(),
-      deps: [AppConfigService],
-      multi: true
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
     },
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
-    {
-      provide: CONNECTOR_DATAMANAGEMENT_API,
-      useFactory: (s: AppConfigService) => s.getConfig()?.dataConnectorUrl,
-      deps: [AppConfigService]
-    },
     {provide: BACKEND_URL, useValue: 'https://marktplatz-backend.platform.agri-gaia.com'},
-    {
-      provide: 'HOME_CONNECTOR_STORAGES',
-      useFactory: (s: AppConfigService) => s.getConfig()?.storages,
-      deps: [AppConfigService]
-    },
-    {provide: API_KEY, useValue: "0bc87c93-3a83-4a1c-9080-ac61e0f7e75c"},
+    {provide: API_KEY, useValue: '0bc87c93-3a83-4a1c-9080-ac61e0f7e75c'},
   ],
   bootstrap: [AppComponent]
 })
