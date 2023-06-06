@@ -71,15 +71,17 @@
 
   <mat-list dense class="catalogue-meta-data-list" fxLayout="row wrap">
     <mat-list-item>
-      <mat-icon mat-list-icon>policy</mat-icon>
-      <div mat-line class="asset-property-name">Policy ID</div>
-      <div mat-line>{{contractOffer.id}}</div>
+      <mat-icon mat-list-icon>handshake</mat-icon>
+      <div class="asset-property-name" mat-line>Obligations</div>
+      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{ obligation.action?.type }} {{ obligation.target }}</div>
+      <div mat-line *ngIf="contractOffer.policy.obligations?.length === 0">- -</div>
     </mat-list-item>
     <mat-list-item>
-      <mat-icon mat-list-icon>ads_click</mat-icon>
-      <div class="asset-property-name" mat-line>Target</div>
-      <div mat-line>{{contractOffer.policy.target ?? '- -'}}</div>
-    </mat-list-item>
+      <mat-icon mat-list-icon>lock</mat-icon>
+      <div class="asset-property-name" mat-line>Prohibitions</div>
+      <div mat-line *ngFor="let prohibition of contractOffer.policy.prohibitions!"></div>
+      <div mat-line *ngIf="contractOffer.policy.prohibitions?.length === 0">- -</div>
+    </mat-list-item>      
     <mat-list-item>
       <mat-icon mat-list-icon>approval</mat-icon>
       <div class="asset-property-name" mat-line>Permissions</div>
@@ -94,13 +96,7 @@
           </ul>
         </ng-container>
       </div>      
-    </mat-list-item>    
-    <mat-list-item>
-      <mat-icon mat-list-icon>handshake</mat-icon>
-      <div class="asset-property-name" mat-line>Verpflichtungen</div>
-      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{ obligation.action?.type }} {{ obligation.target }}</div>
-      <div mat-line *ngIf="contractOffer.policy.obligations?.length === 0">- -</div>
-    </mat-list-item>    
+    </mat-list-item>  
   </mat-list>
 
   <div class="footer" fxLayout="column">
