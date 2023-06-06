@@ -13,5 +13,15 @@
 
 export interface Constraint { 
     edctype: string;
-}
+    leftExpression: {
+      edctype: string;
+      value: string;
+    };
+    rightExpression: {
+      edctype: string;
+      value: string;
+    };
+    operator: string;
+  }
+  
 

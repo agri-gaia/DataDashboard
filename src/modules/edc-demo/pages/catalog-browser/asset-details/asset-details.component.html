@@ -81,16 +81,26 @@
       <div mat-line>{{contractOffer.policy.target ?? '- -'}}</div>
     </mat-list-item>
     <mat-list-item>
-      <mat-icon mat-list-icon>handshake</mat-icon>
-      <div class="asset-property-name" mat-line>Verpflichtungen</div>
-      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{obligation.action?.type}} {{obligation.target}}</div>
-      <div mat-line *ngIf="contractOffer.policy.obligations?.length === 0">- -</div>
-    </mat-list-item>
-    <mat-list-item>
       <mat-icon mat-list-icon>approval</mat-icon>
       <div class="asset-property-name" mat-line>Permissions</div>
-      <div mat-line *ngFor="let permission of contractOffer.policy!.permissions!">{{permission?.action?.type}} {{permission.target}}</div>
-    </mat-list-item>
+      <div mat-line *ngFor="let permission of contractOffer.policy!.permissions!">
+        USE {{ permission.target }} with
+        <ng-container *ngIf="permission.constraints && permission.constraints.length > 0">
+          Constraints:
+          <ul>
+            <li *ngFor="let constraint of permission.constraints">
+              {{ constraint.leftExpression.value }} <strong>{{ constraint.operator }}</strong> {{ constraint.rightExpression.value }}
+            </li>
+          </ul>
+        </ng-container>
+      </div>      
+    </mat-list-item>    
+    <mat-list-item>
+      <mat-icon mat-list-icon>handshake</mat-icon>
+      <div class="asset-property-name" mat-line>Verpflichtungen</div>
+      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{ obligation.action?.type }} {{ obligation.target }}</div>
+      <div mat-line *ngIf="contractOffer.policy.obligations?.length === 0">- -</div>
+    </mat-list-item>    
   </mat-list>
 
   <div class="footer" fxLayout="column">
