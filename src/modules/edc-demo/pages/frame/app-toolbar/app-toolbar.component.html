@@ -7,7 +7,18 @@
     <mat-label>Ort</mat-label>
     <input matInput [(ngModel)]="locationSearchTerm" (input)="doSearch()">
   </mat-form-field>
+  <mat-form-field class="search" appearance="standard" *ngIf="!hideSearch">
+    <mat-label>Daten-Typ</mat-label>
+    <mat-select [(ngModel)]="typeSearchTerm" (selectionChange)="doSearch()">
+      <mat-option value="Datensatz">Datensatz</mat-option>
+      <mat-option value="KI-Modell">KI-Modell</mat-option>
+      <mat-option value="KI-Service">KI-Service</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="search" appearance="standard" *ngIf="!hideSearch">
+    <mat-label>Originator</mat-label>
+    <input matInput [(ngModel)]="originatorSearchTerm" (input)="doSearch()">
+  </mat-form-field>
   <button mat-icon-button (click)="doSearch()" *ngIf="!hideSearch"><mat-icon>search</mat-icon></button>
   <div fxFlex="100"></div>
-  <app-context-switcher fxLayoutAlign="end" class="context-switcher"></app-context-switcher>
 </mat-toolbar>
