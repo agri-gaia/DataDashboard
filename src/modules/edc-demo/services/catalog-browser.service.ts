@@ -42,14 +42,29 @@ export class CatalogBrowserService {
 
   private cataloguePath = `${this.catalogApiUrl}/contractoffers`;
 
-  getContractOffers(): Observable<ContractOffer[]> {
+  getContractOffers(url: string): Observable<ContractOffer[]> {
     return this.post<ContractOffer[]>(this.cataloguePath)
-      .pipe(map(contractOffers => contractOffers.map(contractOffer => {
-        contractOffer.asset = new Asset(contractOffer.asset.properties)
-        return contractOffer;
-      })));
+    .pipe(map(contractOffers => contractOffers.filter(contractOffer => url !== contractOffer.asset?.properties?.['asset:prop:originator'])),
+      map(OtherContractOffers => {
+        OtherContractOffers.forEach(contractOffer => {
+          contractOffer.asset = new Asset(contractOffer.asset.properties);
+        });
+        return OtherContractOffers;
+      })
+    );
   }
 
+  getOwnContractOffers(url: string): Observable<ContractOffer[]> {
+    return this.post<ContractOffer[]>(this.cataloguePath)
+    .pipe(map(contractOffers => contractOffers.filter(contractOffer => url === contractOffer.asset?.properties?.['asset:prop:originator'])),
+      map(OwnContractOffers => {
+        OwnContractOffers.forEach(contractOffer => {
+          contractOffer.asset = new Asset(contractOffer.asset.properties);
+        });
+        return OwnContractOffers;
+      })
+    );
+  }
 
   getFilteredContractOffers(searchTerm: SearchParams): Observable<ContractOffer[]> {
     let operandLeft: SearchBody = {
@@ -64,10 +79,6 @@ export class CatalogBrowserService {
     };
     let searchBody = this.appendSearchBodyTo(operandLeft)
     searchBody = this.appendSearchBodyTo(operandRight, searchBody)
-
-    if (!searchBody) {
-      return this.getContractOffers();
-    }
 
     return this.postWithBody<ContractOffer[]>(this.cataloguePath, {where: searchBody})
       .pipe(map(contractOffers => contractOffers.map(contractOffer => {

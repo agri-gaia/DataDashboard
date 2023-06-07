@@ -8,6 +8,11 @@ import {
 
 export const routes: Routes = [
   {
+    path: 'meine-assets',
+    component: CatalogBrowserComponent,
+    data: {title: 'Meine Assets', icon: 'sim_card' }
+  },
+  {
     path: 'catalog-browser',
     component: CatalogBrowserComponent,
     data: {title: 'Katalog', icon: 'sim_card' }

@@ -9,6 +9,9 @@ import {NegotiationResult} from "../../models/negotiation-result";
 import {Title} from "@angular/platform-browser";
 import {AssetDetailsComponent} from "./asset-details/asset-details.component";
 import {SearchParams} from "../frame/app-toolbar/app-toolbar.component";
+import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/modules/app/core/authentication/authentication.service';
+
 
 interface RunningTransferProcess {
   processId: string;
@@ -28,14 +31,29 @@ export class CatalogBrowserComponent implements OnInit {
   runningNegotiations: Map<string, NegotiationResult> = new Map<string, NegotiationResult>(); // contractOfferId, NegotiationResult
   finishedNegotiations: Map<string, ContractNegotiationDto> = new Map<string, ContractNegotiationDto>(); // contractOfferId, contractAgreementId
   private fetch$ = new BehaviorSubject<SearchParams>({label: '', location: ''});
+  public url: string = "";
 
   constructor(private apiService: CatalogBrowserService,
               public dialog: MatDialog,
-              public titleService: Title) {
+              public titleService: Title,
+              private authenticationService: AuthenticationService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.filteredContractOffers$ = this.apiService.getContractOffers();
+    this.authenticationService.userProfile$.subscribe(userProfile => {
+      if (!userProfile) {
+        throw new Error('UserProfile is null or undefined.');
+      }
+      this.url = userProfile.url;
+      this.route.data.subscribe(data => {
+        if (data.title === 'Meine Assets') {
+          this.filteredContractOffers$ = this.apiService.getOwnContractOffers(this.url);
+        } else if (data.title === 'Katalog') {
+          this.filteredContractOffers$ = this.apiService.getContractOffers(this.url);
+        }
+      });
+    })
 
     this.fetch$
       .pipe(debounceTime(300), skip(1))
