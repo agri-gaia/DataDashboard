@@ -8,7 +8,7 @@
     <input matInput [(ngModel)]="locationSearchTerm" (input)="doSearch()">
   </mat-form-field>
   <mat-form-field class="search" appearance="standard" *ngIf="!hideSearch">
-    <mat-label>Daten-Typ</mat-label>
+    <mat-label>Asset-Typ</mat-label>
     <mat-select [(ngModel)]="typeSearchTerm" (selectionChange)="doSearch()">
       <mat-option value="Datensatz">Datensatz</mat-option>
       <mat-option value="KI-Modell">KI-Modell</mat-option>
