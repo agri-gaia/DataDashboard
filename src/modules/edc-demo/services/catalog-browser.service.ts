@@ -16,7 +16,7 @@ import {
 } from "../../edc-dmgmt-client";
 import {SearchParams} from "../pages/frame/app-toolbar/app-toolbar.component";
 
-type Operand = 'label' | 'startDate' | 'endDate' | 'location';
+type Operand = 'label' | 'startDate' | 'endDate' | 'location' | 'contentType' | 'originator';
 type Operator = 'equals' | 'contains' | '>' | '<' | '>=' | '<=' | '=' | 'and' | 'or';
 
 interface SearchBody {
@@ -62,18 +62,31 @@ export class CatalogBrowserService {
   }  
 
   getFilteredContractOffers(searchTerm: SearchParams): Observable<ContractOffer[]> {
-    let operandLeft: SearchBody = {
+    let operandLabel: SearchBody = {
       operandLeft: 'label',
       operator: 'contains',
       operandRight: searchTerm.label
     };
-    let operandRight: SearchBody = {
+    let operandLocation: SearchBody = {
       operandLeft: 'location',
       operator: 'contains',
       operandRight: searchTerm.location
     };
-    let searchBody = this.appendSearchBodyTo(operandLeft)
-    searchBody = this.appendSearchBodyTo(operandRight, searchBody)
+    let operandType: SearchBody = {
+      operandLeft: 'contentType',
+      operator: 'contains',
+      operandRight: searchTerm.contentType 
+    };
+    let operandOriginator: SearchBody = {
+      operandLeft: 'originator',
+      operator: 'contains',
+      operandRight: searchTerm.originator
+    };
+    // maybe use a for loop instead if this gets any longer
+    let searchBody = this.appendSearchBodyTo(operandLabel)
+    searchBody = this.appendSearchBodyTo(operandLocation, searchBody)
+    searchBody = this.appendSearchBodyTo(operandType, searchBody);
+    searchBody = this.appendSearchBodyTo(operandOriginator, searchBody)
 
     return this.postWithBody<ContractOffer[]>(this.cataloguePath, {where: searchBody})
       .pipe(map(contractOffers => contractOffers.map(contractOffer => {

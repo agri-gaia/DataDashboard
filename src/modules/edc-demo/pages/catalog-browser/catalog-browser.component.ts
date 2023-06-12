@@ -30,9 +30,9 @@ export class CatalogBrowserComponent implements OnInit {
   runningTransferProcesses: RunningTransferProcess[] = [];
   runningNegotiations: Map<string, NegotiationResult> = new Map<string, NegotiationResult>(); // contractOfferId, NegotiationResult
   finishedNegotiations: Map<string, ContractNegotiationDto> = new Map<string, ContractNegotiationDto>(); // contractOfferId, contractAgreementId
-  private fetch$ = new BehaviorSubject<SearchParams>({label: '', location: ''});
   public url: string = "";
   public ownAssets: boolean = true;
+  private fetch$ = new BehaviorSubject<SearchParams>({label: '', location: '', contentType : '', originator: ''});
 
   constructor(private apiService: CatalogBrowserService,
               public dialog: MatDialog,
