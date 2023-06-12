@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: 'meine-assets',
     component: CatalogBrowserComponent,
-    data: {title: 'Meine Assets', icon: 'sim_card' }
+    data: {title: 'Meine Assets', icon: 'home' }
   },
   {
     path: 'catalog-browser',
