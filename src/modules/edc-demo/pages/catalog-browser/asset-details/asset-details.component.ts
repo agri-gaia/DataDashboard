@@ -83,6 +83,10 @@ export class AssetDetailsComponent implements OnInit {
                 })
                 this.dialog.close();
               }
+              else if (updatedNegotiation.state === "DECLINED") {
+                this.notificationService.showInfo("Policy des Verkäufers nicht erfüllt, der Kauf wurde abgelehnt!")
+                this.dialog.close();
+              }
             }
 
             if (!this.runningNegotiation) {
