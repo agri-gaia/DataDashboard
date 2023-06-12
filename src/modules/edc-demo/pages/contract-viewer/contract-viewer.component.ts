@@ -144,7 +144,7 @@ export class ContractViewerComponent implements OnInit {
    */
   private getOfferedAssetForId(assetId: string): Observable<Asset> {
     this.ownAssets = false
-    return this.catalogService.getContractOffers(this.url, this.ownAsset)
+    return this.catalogService.getContractOffers(this.url, this.ownAssets)
       .pipe(
         map(offers => offers.find(o => `urn:artifact:${o.asset.id}` === assetId)),
         map(o => {
