@@ -32,6 +32,7 @@ export class CatalogBrowserComponent implements OnInit {
   finishedNegotiations: Map<string, ContractNegotiationDto> = new Map<string, ContractNegotiationDto>(); // contractOfferId, contractAgreementId
   private fetch$ = new BehaviorSubject<SearchParams>({label: '', location: ''});
   public url: string = "";
+  public ownAssets: boolean = true;
 
   constructor(private apiService: CatalogBrowserService,
               public dialog: MatDialog,
@@ -48,9 +49,10 @@ export class CatalogBrowserComponent implements OnInit {
       this.url = userProfile.url;
       this.route.data.subscribe(data => {
         if (data.title === 'Meine Assets') {
-          this.filteredContractOffers$ = this.apiService.getOwnContractOffers(this.url);
+          this.filteredContractOffers$ = this.apiService.getContractOffers(this.url, this.ownAssets);
         } else if (data.title === 'Katalog') {
-          this.filteredContractOffers$ = this.apiService.getContractOffers(this.url);
+          this.ownAssets = false
+          this.filteredContractOffers$ = this.apiService.getContractOffers(this.url, this.ownAssets);
         }
       });
     })

@@ -42,29 +42,24 @@ export class CatalogBrowserService {
 
   private cataloguePath = `${this.catalogApiUrl}/contractoffers`;
 
-  getContractOffers(url: string): Observable<ContractOffer[]> {
+  getContractOffers(url: string, ownAssets: boolean): Observable<ContractOffer[]> {
     return this.post<ContractOffer[]>(this.cataloguePath)
-    .pipe(map(contractOffers => contractOffers.filter(contractOffer => url !== contractOffer.asset?.properties?.['asset:prop:originator'])),
-      map(OtherContractOffers => {
-        OtherContractOffers.forEach(contractOffer => {
-          contractOffer.asset = new Asset(contractOffer.asset.properties);
-        });
-        return OtherContractOffers;
-      })
-    );
-  }
-
-  getOwnContractOffers(url: string): Observable<ContractOffer[]> {
-    return this.post<ContractOffer[]>(this.cataloguePath)
-    .pipe(map(contractOffers => contractOffers.filter(contractOffer => url === contractOffer.asset?.properties?.['asset:prop:originator'])),
-      map(OwnContractOffers => {
-        OwnContractOffers.forEach(contractOffer => {
-          contractOffer.asset = new Asset(contractOffer.asset.properties);
-        });
-        return OwnContractOffers;
-      })
-    );
-  }
+      .pipe(
+        map(contractOffers => {
+          if (ownAssets) {
+            return contractOffers.filter(contractOffer => url === contractOffer.asset?.properties?.['asset:prop:originator']);
+          } else {
+            return contractOffers.filter(contractOffer => url !== contractOffer.asset?.properties?.['asset:prop:originator']);
+          }
+        }),
+        map(contractOffers => {
+          contractOffers.forEach(contractOffer => {
+            contractOffer.asset = new Asset(contractOffer.asset.properties);
+          });
+          return contractOffers;
+        })
+      );
+  }  
 
   getFilteredContractOffers(searchTerm: SearchParams): Observable<ContractOffer[]> {
     let operandLeft: SearchBody = {
