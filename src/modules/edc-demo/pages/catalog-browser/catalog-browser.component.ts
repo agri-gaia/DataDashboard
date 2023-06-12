@@ -48,12 +48,10 @@ export class CatalogBrowserComponent implements OnInit {
       }
       this.url = userProfile.url;
       this.route.data.subscribe(data => {
-        if (data.title === 'Meine Assets') {
-          this.filteredContractOffers$ = this.apiService.getContractOffers(this.url, this.ownAssets);
-        } else if (data.title === 'Katalog') {
+        if (data.title === 'Katalog') {
           this.ownAssets = false
+        } 
           this.filteredContractOffers$ = this.apiService.getContractOffers(this.url, this.ownAssets);
-        }
       });
     })
 
