@@ -57,7 +57,7 @@ export class CatalogBrowserComponent implements OnInit {
 
     this.fetch$
       .pipe(debounceTime(300), skip(1))
-      .subscribe((searchTerm) => this.filteredContractOffers$ = this.apiService.getFilteredContractOffers(searchTerm));
+      .subscribe((searchTerm) => this.filteredContractOffers$ = this.apiService.getFilteredContractOffers(searchTerm, this.url, this.ownAssets));
   }
 
   onSearch(event: SearchParams) {
