@@ -87,9 +87,9 @@
       <div class="asset-property-name" mat-line>Berechtigungen</div>
       <div mat-line *ngFor="let permission of contractOffer.policy?.permissions">
         <ng-container *ngIf="permission?.action">
-          {{ permission.action?.type }} {{ permission.target }} mit folgenden
+          {{ permission.action?.type }} {{ permission.target }} 
           <ng-container *ngIf="permission.constraints && permission.constraints.length > 0">
-            <strong>Einschränkungen:</strong>
+            <strong>mit folgenden Einschränkungen:</strong>
             <ul>
               <li *ngFor="let constraint of permission.constraints">
                 {{ constraint.leftExpression?.value }} <strong>{{ constraint.operator }}</strong> {{ constraint.rightExpression?.value }}
