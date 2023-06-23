@@ -92,14 +92,14 @@
             <strong>mit folgenden Einschränkungen:</strong>
             <ul>
               <li *ngFor="let constraint of permission.constraints">
-                {{ constraint.leftExpression?.value }} <strong>{{ constraint.operator }}</strong> {{ constraint.rightExpression?.value }}
+                {{ constraint.leftExpression?.value }} <strong>{{ constraint.operator }}</strong> {{ constraint.rightExpression?.value | date: 'dd.MM.yyyy HH:mm:ss' }}
               </li>
             </ul>
           </ng-container>
         </ng-container>
       </div>      
     </mat-list-item>
-  </mat-list>
+    </mat-list>
 
   <div class="footer" fxLayout="column">
     <div fxFlex fxLayoutAlign="end">
