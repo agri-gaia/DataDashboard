@@ -41,7 +41,7 @@ export class ContractViewerComponent implements OnInit {
   public userName: string = "";
   public dataConnectorUrl: string = "";
   public url: string = "";
-  public ownAssets: boolean = true;
+  public ownAssets: boolean = false;
 
   constructor(private contractAgreementService: ContractAgreementService,
               private assetService: AssetService,
@@ -143,7 +143,6 @@ export class ContractViewerComponent implements OnInit {
    * @param assetId Asset ID of the asset that is associated with the contract.
    */
   private getOfferedAssetForId(assetId: string): Observable<Asset> {
-    this.ownAssets = false
     return this.catalogService.getContractOffers(this.url, this.ownAssets)
       .pipe(
         map(offers => offers.find(o => `urn:artifact:${o.asset.id}` === assetId)),
