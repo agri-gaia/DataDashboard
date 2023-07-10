@@ -46,14 +46,17 @@ export class CatalogBrowserComponent implements OnInit {
       if (!userProfile) {
         throw new Error('UserProfile is null or undefined.');
       }
-      this.url = userProfile.url;
-      this.route.data.subscribe(data => {
-        if (data.title === 'Katalog') {
-          this.ownAssets = false
-        } 
-          this.filteredContractOffers$ = this.apiService.getContractOffers(this.url, this.ownAssets);
-      });
+
+    this.route.data.subscribe(data => {
+      if (data.ownAssets === false) {
+        this.ownAssets = false
+      }
     })
+
+    this.url = userProfile.url;
+
+    this.filteredContractOffers$ = this.apiService.getContractOffers(this.url, this.ownAssets);
+  })
 
     this.fetch$
       .pipe(debounceTime(300), skip(1))

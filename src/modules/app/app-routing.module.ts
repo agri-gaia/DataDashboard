@@ -10,12 +10,12 @@ export const routes: Routes = [
   {
     path: 'meine-assets',
     component: CatalogBrowserComponent,
-    data: {title: 'Meine Assets', icon: 'home' }
+    data: {title: 'Meine Assets', icon: 'home', ownAssets: true }
   },
   {
     path: 'catalog-browser',
     component: CatalogBrowserComponent,
-    data: {title: 'Katalog', icon: 'sim_card' }
+    data: {title: 'Katalog', icon: 'sim_card', ownAssets: false }
   },
   {
     path: 'contracts',
