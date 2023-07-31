@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { take } from 'rxjs/operators';
-import { routes } from '../../app-routing.module';
-import { UserProfile } from '../../shared/user-profile';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {take} from 'rxjs/operators';
+import {routes} from '../../app-routing.module';
+import {UserProfile} from '../../shared/user-profile';
+import {AuthenticationService} from '../../core/authentication/authentication.service';
 
 enum Group {
   LMIS = 'LMIS',
@@ -23,15 +23,14 @@ export class NavigationComponent implements OnInit {
 
   @Output() public toggleMenuEvent = new EventEmitter<number>();
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(public authenticationService: AuthenticationService) {}
 
   public ngOnInit(): void {
     this.authenticationService.userProfile$.subscribe(userProfile => {
-      if (!userProfile) {
-        throw new Error('UserProfile is null or undefined.');
+      if (!!userProfile) {
+        this.profile = userProfile
       }
-      this.profile = userProfile
-      })
+    })
   }
 
   public logout(): void {
@@ -42,7 +41,7 @@ export class NavigationComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
     this.toggleMenuEvent.emit(this.isMenuOpen ? 295 : 75);
   }
-  
+
   getGroupLogoSource(): string {
     let logoDir = "/assets/theme/company-logos/"
     switch (this.profile?.group) {
@@ -56,5 +55,4 @@ export class NavigationComponent implements OnInit {
         throw new Error("Could not determine groupLogoPath.");
     }
   }
-
 }

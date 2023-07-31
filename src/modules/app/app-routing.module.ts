@@ -5,8 +5,8 @@ import {ContractViewerComponent} from "../edc-demo/pages/contract-viewer/contrac
 import {
   TransferHistoryViewerComponent
 } from "../edc-demo/pages/transfer-history/transfer-history-viewer.component";
-import { StartpageComponent } from '../edc-demo/pages/startpage/startpage.component';
-import { RegistrationComponent } from '../edc-demo/pages/registration/registration.component';
+import { StartpageComponent } from './components/startpage/startpage.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 import { AuthGuard } from './core/authentication/auth-guard';
 
 export const routes: Routes = [
@@ -28,14 +28,14 @@ export const routes: Routes = [
     data: {title: 'Downloads', icon: 'assignment'},
     canActivate: [AuthGuard]
   },
-  { 
-    path: 'registration', 
-    component: RegistrationComponent 
+  {
+    path: 'registration',
+    component: RegistrationComponent
   },
-  { 
-    path: '', 
+  {
+    path: '',
     component: StartpageComponent,
-  }, 
+  },
 ];
 
 @NgModule({
