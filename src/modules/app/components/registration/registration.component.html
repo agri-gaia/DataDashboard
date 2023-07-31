@@ -6,25 +6,28 @@
         <mat-form-field>
           <mat-label>Benutzername</mat-label>
           <input matInput formControlName="benutzername">
-          <mat-error>Fehlermeldungtemplate</mat-error>
+          <mat-error>Bitte Wert eingeben!</mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <mat-label>DataUrl</mat-label>
+          <mat-label>DataUrl des Connectors</mat-label>
           <input matInput formControlName="dataUrl">
+          <mat-error>Bitte Wert eingeben!</mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <mat-label>idsUrl</mat-label>
+          <mat-label>IdsUrl des Connectors</mat-label>
           <input matInput formControlName="idsUrl">
+          <mat-error>Bitte Wert eingeben!</mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <mat-label>StorageEndpoint</mat-label>
+          <mat-label>Url des Datenspeichers</mat-label>
           <input matInput formControlName="storageEndpoint">
+          <mat-error>Bitte Wert eingeben!</mat-error>
         </mat-form-field>
       </div>
       <button color="primary" mat-raised-button type="button" (click)="onSubmit()" [disabled]="!registrationForm.valid">Senden</button>
