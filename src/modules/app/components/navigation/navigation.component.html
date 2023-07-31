@@ -18,14 +18,14 @@
           <mat-icon>logout</mat-icon>
         </button>
       </mat-list-item>
-      <ng-container *ngFor="let route of routes">
+      <ng-container *ngFor="let route of routes.slice(0, routes.length - 2)">
         <a [routerLink]="[route.path]" routerLinkActive="router-link-active">
           <mat-list-item *ngIf="route.component">
             <mat-icon mat-list-icon color="primary">{{ route.data?.icon }}</mat-icon>
             <span matLine>{{ route.data?.title ?? route.path }}</span>
           </mat-list-item>
         </a>
-      </ng-container>
+      </ng-container>      
     </mat-nav-list>
     <div style="flex-grow: 100"></div>
   </mat-sidenav>

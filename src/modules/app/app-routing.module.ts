@@ -5,26 +5,37 @@ import {ContractViewerComponent} from "../edc-demo/pages/contract-viewer/contrac
 import {
   TransferHistoryViewerComponent
 } from "../edc-demo/pages/transfer-history/transfer-history-viewer.component";
+import { StartpageComponent } from '../edc-demo/pages/startpage/startpage.component';
+import { RegistrationComponent } from '../edc-demo/pages/registration/registration.component';
+import { AuthGuard } from './core/authentication/auth-guard';
 
 export const routes: Routes = [
   {
     path: 'catalog-browser',
     component: CatalogBrowserComponent,
-    data: {title: 'Katalog', icon: 'sim_card' }
+    data: {title: 'Katalog', icon: 'sim_card' },
+    canActivate: [AuthGuard]
   },
   {
     path: 'contracts',
     component: ContractViewerComponent,
-    data: {title: 'Käufe', icon: 'attachment'}
+    data: {title: 'Käufe', icon: 'attachment'},
+    canActivate: [AuthGuard]
   },
   {
     path: 'transfer-history',
     component: TransferHistoryViewerComponent,
-    data: {title: 'Downloads', icon: 'assignment'}
+    data: {title: 'Downloads', icon: 'assignment'},
+    canActivate: [AuthGuard]
   },
-  {
-    path: '', redirectTo: 'catalog-browser', pathMatch: 'full'
-  }
+  { 
+    path: 'registration', 
+    component: RegistrationComponent 
+  },
+  { 
+    path: '', 
+    component: StartpageComponent,
+  }, 
 ];
 
 @NgModule({

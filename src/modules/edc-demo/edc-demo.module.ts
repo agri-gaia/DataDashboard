@@ -34,6 +34,8 @@ import {ConfirmationDialogComponent} from './components/confirmation-dialog/conf
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {AppToolbarComponent} from "./pages/frame/app-toolbar/app-toolbar.component";
 import {AssetDetailsComponent} from './pages/catalog-browser/asset-details/asset-details.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
+import { StartpageComponent } from './pages/startpage/startpage.component';
 
 @NgModule({
   imports: [
@@ -73,6 +75,8 @@ import {AssetDetailsComponent} from './pages/catalog-browser/asset-details/asset
     ConfirmationDialogComponent,
     AppToolbarComponent,
     AssetDetailsComponent,
+    RegistrationComponent,
+    StartpageComponent
   ],
   exports: [
     CatalogBrowserComponent,
