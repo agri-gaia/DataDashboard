@@ -1,5 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {take} from 'rxjs/operators';
 import {routes} from '../../app-routing.module';
 import {UserProfile} from '../../shared/user-profile';
 import {AuthenticationService} from '../../core/authentication/authentication.service';
