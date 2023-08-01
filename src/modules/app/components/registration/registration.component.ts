@@ -11,7 +11,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.registrationForm = this.formBuilder.group({
-      benutzername: ['', Validators.required], 
+      benutzername: ['', Validators.required],
+      organisation: ['', Validators.required],
       dataUrl: ['', Validators.required],
       idsUrl: ['', Validators.required],
       storageEndpoint: ['', Validators.required]
@@ -25,6 +26,7 @@ export class RegistrationComponent implements OnInit {
     const subject = `Registrierung für Agri-Gaia-Marktplatz`;
     const body = `
       Benutzername: ${this.registrationForm.get('benutzername')?.value}
+      Organisation: ${this.registrationForm.get('organisation')?.value}
       DataUrl des Connectors: ${this.registrationForm.get('dataUrl')?.value}
       IdsUrl des Connectors: ${this.registrationForm.get('idsUrl')?.value}
       StorageEndpoint: ${this.registrationForm.get('storageEndpoint')?.value}
