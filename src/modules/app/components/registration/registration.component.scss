@@ -1,8 +1,8 @@
 .center-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .registration-form {
@@ -15,28 +15,17 @@
 
 .form-heading {
   margin-bottom: 20px;
+  margin-top: 30px;
 }
 
-.registration-form label {
-  display: block;
-  margin-bottom: 8px;
+.button-container {
+  display: flex; 
 }
 
-.registration-form input[type="text"] {
-  width: 300px; 
-  height: 30px; 
-  margin-bottom: 5px; 
-  padding: 5px;
-  border: 1px solid #ccc;
-}
-
-.registration-form button {
-  width: 150px; 
-  height: 40px; 
-  color: #fff;
-  border: none;
+button {
+  margin: 5px;
+  color: #FFF;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .hints-container {
@@ -46,13 +35,7 @@
   max-width: 500px;
 }
 
-.hint-heading {
-  font-size: 16px;
-  font-weight: lighter;
-  margin-bottom: 10px;
-}
-
-.hint-text {
-  font-size: 14px;
-  margin-bottom: 10px;
+.center-hint {
+  display: flex;
+  justify-content: center;
 }

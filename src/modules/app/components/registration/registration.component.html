@@ -1,5 +1,6 @@
 <div class="center-container">
   <div class="registration-form">
+    <img class="logo" src="/assets/theme/logo-agrigaia.svg"/>
     <h2 class="form-heading">Registrierungsformular</h2>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <div>
@@ -37,14 +38,29 @@
           <mat-error>Bitte Wert eingeben!</mat-error>
         </mat-form-field>
       </div>
-      <button color="primary" mat-raised-button type="button" (click)="onSubmit()" [disabled]="!registrationForm.valid">Senden</button>
     </form>
+    <div class="button-container">
+      <button color="primary" mat-raised-button (click)="onSubmit()" [disabled]="!registrationForm.valid">Senden</button>
+      <button color="primary" mat-raised-button (click)="onHelp()">Rückfrage</button>
+    </div>
   </div>
   <div class="hints-container">
-    <p class="hint-heading">Beispiel DataUrl:</p>
-    <p class="hint-text">web.http.data.path=/api/v1/data => DataUrl=https://connector-123/api/v1/data</p>
-    <p class="hint-heading">Beispiel IdsUrl:</p>
-    <p class="hint-text">web.http.ids.path=/api/v1/ids => IdsUrl=https://connector-123/api/v1/ids/data</p>
+    <p>
+      Die DataUrl bezeichnet die Adresse, die zu Ihrem web.http.data.path in Ihrer Connector-Konfiguration korrespondiert.
+      Haben Sie beispielsweise
+    </p>
+    <div class="center-hint">
+       <p>web.http.data.path=/api/v1/data</p>
+    </div>
+    <p>
+      gesetzt, so hat Ihre DataUrl die folgende Form:
+    </p>
+    <div class="center-hint">
+      <p>https://connector-123/api/v1/data</p>
+    </div>
+    <p>
+      Analog korrespondiert die IdsUrl Ihres Connectors zu dem Wert, den Sie dem web.http.ids.path zugewiesen haben.
+    </p>
   </div>
 </div>
 

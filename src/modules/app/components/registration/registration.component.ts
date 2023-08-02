@@ -38,4 +38,13 @@ export class RegistrationComponent implements OnInit {
 
     window.open(mailtoLink);
   }
+
+  onHelp() {
+    const recipientEmail = 'test3@lmis.de';
+    const subject = `Rückfrage zum Agri-Gaia-Marktplatz`;
+    const encodedSubject = encodeURIComponent(subject);
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodedSubject}`;
+
+    window.open(mailtoLink);
+  }
 }
