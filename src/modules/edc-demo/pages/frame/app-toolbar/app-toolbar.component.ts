@@ -12,16 +12,20 @@ export class AppToolbarComponent {
   onSearch: EventEmitter<SearchParams> = new EventEmitter<SearchParams>();
   labelSearchTerm: string = '';
   locationSearchTerm: string = '';
+  typeSearchTerm: string = '';
+  originatorSearchTerm: string = '';
 
   @Input()
   hideSearch= false;
 
   doSearch() {
-    this.onSearch.next({label: this.labelSearchTerm, location: this.locationSearchTerm})
+    this.onSearch.next({label: this.labelSearchTerm, location: this.locationSearchTerm, contentType: this.typeSearchTerm, originator: this.originatorSearchTerm})
   }
 }
 
 export interface SearchParams{
   label: string,
-  location: string
+  location: string,
+  contentType : string,
+  originator: string
 }

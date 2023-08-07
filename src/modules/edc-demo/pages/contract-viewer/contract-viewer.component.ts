@@ -38,8 +38,8 @@ export class ContractViewerComponent implements OnInit {
   contracts$: Observable<ContractAgreementDto[]> = of([]);
   private runningTransfers: RunningTransferProcess[] = [];
   private pollingHandleTransfer?: any;
-  public userName: string = "";
   public dataConnectorUrl: string = "";
+  public url: string = "";
 
   constructor(private contractAgreementService: ContractAgreementService,
               private assetService: AssetService,
@@ -71,6 +71,7 @@ export class ContractViewerComponent implements OnInit {
           throw new Error('UserProfile is null or undefined.');
         }
         this.dataConnectorUrl = userProfile.dataConnectorUrl;
+        this.url = userProfile.url
         })
   }
 
@@ -140,7 +141,7 @@ export class ContractViewerComponent implements OnInit {
    * @param assetId Asset ID of the asset that is associated with the contract.
    */
   private getOfferedAssetForId(assetId: string): Observable<Asset> {
-    return this.catalogService.getContractOffers()
+    return this.catalogService.getContractOffers(this.url, false)
       .pipe(
         map(offers => offers.find(o => `urn:artifact:${o.asset.id}` === assetId)),
         map(o => {

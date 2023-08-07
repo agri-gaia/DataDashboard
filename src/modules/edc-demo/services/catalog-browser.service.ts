@@ -16,7 +16,7 @@ import {
 } from "../../edc-dmgmt-client";
 import {SearchParams} from "../pages/frame/app-toolbar/app-toolbar.component";
 
-type Operand = 'label' | 'startDate' | 'endDate' | 'location';
+type Operand = 'label' | 'startDate' | 'endDate' | 'location' | 'contentType' | 'originator';
 type Operator = 'equals' | 'contains' | '>' | '<' | '>=' | '<=' | '=' | 'and' | 'or';
 
 interface SearchBody {
@@ -42,39 +42,58 @@ export class CatalogBrowserService {
 
   private cataloguePath = `${this.catalogApiUrl}/contractoffers`;
 
-  getContractOffers(): Observable<ContractOffer[]> {
+  getContractOffers(url: string, ownAssets: boolean): Observable<ContractOffer[]> {
     return this.post<ContractOffer[]>(this.cataloguePath)
-      .pipe(map(contractOffers => contractOffers.map(contractOffer => {
-        contractOffer.asset = new Asset(contractOffer.asset.properties)
-        return contractOffer;
-      })));
-  }
+    .pipe(
+      map(contractOffers => this.separateAssets(contractOffers, ownAssets, url))
+    );
+  }  
 
-
-  getFilteredContractOffers(searchTerm: SearchParams): Observable<ContractOffer[]> {
-    let operandLeft: SearchBody = {
+  getFilteredContractOffers(searchTerm: SearchParams, url: string, ownAssets: boolean): Observable<ContractOffer[]> {
+    let operandLabel: SearchBody = {
       operandLeft: 'label',
       operator: 'contains',
       operandRight: searchTerm.label
     };
-    let operandRight: SearchBody = {
+    let operandLocation: SearchBody = {
       operandLeft: 'location',
       operator: 'contains',
       operandRight: searchTerm.location
     };
-    let searchBody = this.appendSearchBodyTo(operandLeft)
-    searchBody = this.appendSearchBodyTo(operandRight, searchBody)
-
-    if (!searchBody) {
-      return this.getContractOffers();
-    }
+    let operandType: SearchBody = {
+      operandLeft: 'contentType',
+      operator: 'contains',
+      operandRight: searchTerm.contentType 
+    };
+    let operandOriginator: SearchBody = {
+      operandLeft: 'originator',
+      operator: 'contains',
+      operandRight: searchTerm.originator
+    };
+    // maybe use a for loop instead if this gets any longer
+    let searchBody = this.appendSearchBodyTo(operandLabel)
+    searchBody = this.appendSearchBodyTo(operandLocation, searchBody)
+    searchBody = this.appendSearchBodyTo(operandType, searchBody);
+    searchBody = this.appendSearchBodyTo(operandOriginator, searchBody)
 
     return this.postWithBody<ContractOffer[]>(this.cataloguePath, {where: searchBody})
-      .pipe(map(contractOffers => contractOffers.map(contractOffer => {
-        contractOffer.asset = new Asset(contractOffer.asset.properties)
-        return contractOffer;
-      })));
+    .pipe(
+      map(contractOffers => this.separateAssets(contractOffers, ownAssets, url))
+    );
   }
+
+  separateAssets(contractOffers: ContractOffer[], ownAssets: boolean, url: string): ContractOffer[] {
+    const filteredContractOffers = ownAssets
+      ? contractOffers.filter(contractOffer => url === contractOffer.asset?.properties?.['asset:prop:originator'])
+      : contractOffers.filter(contractOffer => url !== contractOffer.asset?.properties?.['asset:prop:originator']);
+  
+    filteredContractOffers.forEach(contractOffer => {
+      contractOffer.asset = new Asset(contractOffer.asset.properties);
+    });
+  
+    return filteredContractOffers;
+  }
+  
 
   private appendSearchBodyTo(toAppend: SearchBody, baseBody?: SearchBody): SearchBody | undefined {
     if (!baseBody) {

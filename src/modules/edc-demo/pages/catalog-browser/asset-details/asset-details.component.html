@@ -71,27 +71,35 @@
 
   <mat-list dense class="catalogue-meta-data-list" fxLayout="row wrap">
     <mat-list-item>
-      <mat-icon mat-list-icon>policy</mat-icon>
-      <div mat-line class="asset-property-name">Policy ID</div>
-      <div mat-line>{{contractOffer.id}}</div>
-    </mat-list-item>
-    <mat-list-item>
-      <mat-icon mat-list-icon>ads_click</mat-icon>
-      <div class="asset-property-name" mat-line>Target</div>
-      <div mat-line>{{contractOffer.policy.target ?? '- -'}}</div>
-    </mat-list-item>
-    <mat-list-item>
       <mat-icon mat-list-icon>handshake</mat-icon>
       <div class="asset-property-name" mat-line>Verpflichtungen</div>
-      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{obligation.action?.type}} {{obligation.target}}</div>
+      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{ obligation.action?.type }} {{ obligation.target }}</div>
       <div mat-line *ngIf="contractOffer.policy.obligations?.length === 0">- -</div>
     </mat-list-item>
     <mat-list-item>
+      <mat-icon mat-list-icon>lock</mat-icon>
+      <div class="asset-property-name" mat-line>Verbote</div>
+      <div mat-line *ngFor="let prohibition of contractOffer.policy.prohibitions!"></div>
+      <div mat-line *ngIf="contractOffer.policy.prohibitions?.length === 0">- -</div>
+    </mat-list-item>      
+    <mat-list-item>
       <mat-icon mat-list-icon>approval</mat-icon>
-      <div class="asset-property-name" mat-line>Permissions</div>
-      <div mat-line *ngFor="let permission of contractOffer.policy!.permissions!">{{permission?.action?.type}} {{permission.target}}</div>
+      <div class="asset-property-name" mat-line>Berechtigungen</div>
+      <div mat-line *ngFor="let permission of contractOffer.policy?.permissions">
+        <ng-container *ngIf="permission?.action">
+          {{ permission.action?.type }} {{ permission.target }} 
+          <ng-container *ngIf="permission.constraints && permission.constraints.length > 0">
+            <strong>mit folgenden Einschränkungen:</strong>
+            <ul>
+              <li *ngFor="let constraint of permission.constraints">
+                {{ constraint.leftExpression?.value }} <strong>{{ constraint.operator }}</strong> {{ constraint.rightExpression?.value | date: 'dd.MM.yyyy HH:mm:ss' }}
+              </li>
+            </ul>
+          </ng-container>
+        </ng-container>
+      </div>      
     </mat-list-item>
-  </mat-list>
+    </mat-list>
 
   <div class="footer" fxLayout="column">
     <div fxFlex fxLayoutAlign="end">
