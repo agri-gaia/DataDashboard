@@ -42,16 +42,14 @@ export class CatalogBrowserService {
 
   private cataloguePath = `${this.catalogApiUrl}/contractoffers`;
 
-  getContractOffers(): Observable<ContractOffer[]> {
+  getContractOffers(url: string, ownAssets: boolean): Observable<ContractOffer[]> {
     return this.post<ContractOffer[]>(this.cataloguePath)
-      .pipe(map(contractOffers => contractOffers.map(contractOffer => {
-        contractOffer.asset = new Asset(contractOffer.asset.properties)
-        return contractOffer;
-      })));
-  }
+    .pipe(
+      map(contractOffers => this.separateAssets(contractOffers, ownAssets, url))
+    );
+  }  
 
-
-  getFilteredContractOffers(searchTerm: SearchParams): Observable<ContractOffer[]> {
+  getFilteredContractOffers(searchTerm: SearchParams, url: string, ownAssets: boolean): Observable<ContractOffer[]> {
     let operandLabel: SearchBody = {
       operandLeft: 'label',
       operator: 'contains',
@@ -78,16 +76,24 @@ export class CatalogBrowserService {
     searchBody = this.appendSearchBodyTo(operandType, searchBody);
     searchBody = this.appendSearchBodyTo(operandOriginator, searchBody)
 
-    if (!searchBody) {
-      return this.getContractOffers();
-    }
-
     return this.postWithBody<ContractOffer[]>(this.cataloguePath, {where: searchBody})
-      .pipe(map(contractOffers => contractOffers.map(contractOffer => {
-        contractOffer.asset = new Asset(contractOffer.asset.properties)
-        return contractOffer;
-      })));
+    .pipe(
+      map(contractOffers => this.separateAssets(contractOffers, ownAssets, url))
+    );
   }
+
+  separateAssets(contractOffers: ContractOffer[], ownAssets: boolean, url: string): ContractOffer[] {
+    const filteredContractOffers = ownAssets
+      ? contractOffers.filter(contractOffer => url === contractOffer.asset?.properties?.['asset:prop:originator'])
+      : contractOffers.filter(contractOffer => url !== contractOffer.asset?.properties?.['asset:prop:originator']);
+  
+    filteredContractOffers.forEach(contractOffer => {
+      contractOffer.asset = new Asset(contractOffer.asset.properties);
+    });
+  
+    return filteredContractOffers;
+  }
+  
 
   private appendSearchBodyTo(toAppend: SearchBody, baseBody?: SearchBody): SearchBody | undefined {
     if (!baseBody) {
