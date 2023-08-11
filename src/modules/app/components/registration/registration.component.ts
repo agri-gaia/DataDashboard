@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    const recipientEmail = 'test3@lmis.de';
+    const recipientEmail = 'registrierung-agmarktplatz@lmis.de';
     const subject = `Registrierung für Agri-Gaia-Marktplatz`;
     const body = `
       Benutzername: ${this.registrationForm.get('benutzername')?.value}
@@ -40,7 +40,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onHelp() {
-    const recipientEmail = 'test3@lmis.de';
+    const recipientEmail = 'registrierung-agmarktplatz@lmis.de';
     const subject = `Rückfrage zum Agri-Gaia-Marktplatz`;
     const encodedSubject = encodeURIComponent(subject);
     const mailtoLink = `mailto:${recipientEmail}?subject=${encodedSubject}`;
