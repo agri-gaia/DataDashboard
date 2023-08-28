@@ -36,10 +36,15 @@
       <div mat-line>{{contractOffer.asset.originator}}</div>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item *ngIf="contractOffer.asset.contentType == 'Datensatz' || contractOffer.asset.contentType == 'KI-Modell'">
       <mat-icon mat-list-icon>storage</mat-icon>
       <div class="asset-property-name" mat-line>Byte Größe</div>
       <div mat-line>{{contractOffer.asset.properties?.byteSize ?? '- -'}}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="contractOffer.asset.contentType == 'KI-Service'">
+      <mat-icon>api</mat-icon>
+      <div class="asset-property-name" mat-line>Open API Beschreibung</div>
+      <div mat-line>{{contractOffer.asset.properties?.openApiDescription ?? '- -'}}</div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>drive_file_rename_outline</mat-icon>
@@ -67,6 +72,7 @@
     </mat-list-item>
   </mat-list>
   <mat-divider class="divider"></mat-divider>
+
   <div fxLayout="column">
     <h2>Policy Details</h2>
   </div>
