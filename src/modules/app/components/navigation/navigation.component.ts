@@ -4,9 +4,18 @@ import {UserProfile} from '../../shared/user-profile';
 import {AuthenticationService} from '../../core/authentication/authentication.service';
 
 enum Group {
-  LMIS = 'LMIS',
+  AgBRAIN = 'AgBRAIN',
+  Amazone = 'Amazone',
+  AVF = 'AVF',
+  Bosch = 'Bosch',
+  Claas = 'Claas',
+  DFKI = 'DFKI',
   HSOS = 'HSOS',
-  AgBRAIN = 'AgBRAIN'
+  Kotte = 'Kotte',
+  Krone = 'Krone',
+  LMIS = 'LMIS',
+  UOS = 'UOS',
+  Wernsing = 'Wernsing'
 }
 
 @Component({
@@ -44,12 +53,28 @@ export class NavigationComponent implements OnInit {
   getGroupLogoSource(): string {
     let logoDir = "/assets/theme/company-logos/"
     switch (this.profile?.group) {
-      case Group.LMIS:
-        return logoDir + "lmis.svg"
-      case Group.HSOS:
-        return logoDir + "hsos.svg"
       case Group.AgBRAIN:
         return logoDir + "agbrain.svg"
+      case Group.Amazone:
+        return logoDir + "amazone.svg"
+      case Group.Bosch:
+        return logoDir + "bosch.svg"
+      case Group.Claas:
+        return logoDir + "claas.svg"
+      case Group.DFKI:
+        return logoDir + "dfki.svg"
+      case Group.HSOS:
+        return logoDir + "hsos.svg"
+      case Group.Kotte:
+        return logoDir + "kotte.svg"
+      case Group.Krone:
+        return logoDir + "krone.svg"
+      case Group.LMIS:
+        return logoDir + "lmis.svg"
+      case Group.UOS:
+        return logoDir + "uos.svg"
+      case Group.Wernsing:
+        return logoDir + "wernsing.svg"
       default:
         throw new Error("Could not determine groupLogoPath.");
     }
