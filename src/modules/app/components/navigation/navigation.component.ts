@@ -57,18 +57,20 @@ export class NavigationComponent implements OnInit {
         return logoDir + "agbrain.svg"
       case Group.Amazone:
         return logoDir + "amazone.svg"
+      case Group.AVF:
+        return logoDir + "avf.svg"
       case Group.Bosch:
         return logoDir + "bosch.svg"
       case Group.Claas:
         return logoDir + "claas.svg"
       case Group.DFKI:
-        return logoDir + "dfki.svg"
+        return logoDir + "dfki.png"
       case Group.HSOS:
         return logoDir + "hsos.svg"
       case Group.Kotte:
         return logoDir + "kotte.svg"
       case Group.Krone:
-        return logoDir + "krone.svg"
+        return logoDir + "krone.png"
       case Group.LMIS:
         return logoDir + "lmis.svg"
       case Group.UOS:
