@@ -17,12 +17,12 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/mater
 import {API_KEY, BACKEND_URL} from "../edc-dmgmt-client";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
-import {environment} from "src/environments/environment"
 import {RegistrationComponent} from "./components/registration/registration.component";
 import {StartpageComponent} from "./components/startpage/startpage.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import { environment } from 'src/environments/environment.localhost';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
