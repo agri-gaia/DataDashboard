@@ -3,12 +3,16 @@
 }
 
 .footer {
-  margin-top: 15px;
+  margin-top: 40px;
   padding-bottom: 25px;
   height: fit-content;
 
   .footer-button {
     width: 200px;
+  }
+
+  .mat-progress-bar {
+    margin-top: 40px;
   }
 }
 
