@@ -18,7 +18,7 @@
           <mat-icon>logout</mat-icon>
         </button>
       </mat-list-item>
-      <ng-container *ngFor="let route of routes.slice(0, routes.length - 2)">
+      <ng-container *ngFor="let route of protectedRoutes.slice(0, protectedRoutes.length)">
         <a [routerLink]="[route.path]" routerLinkActive="router-link-active">
           <mat-list-item *ngIf="route.component">
             <mat-icon mat-list-icon color="primary">{{ route.data?.icon }}</mat-icon>

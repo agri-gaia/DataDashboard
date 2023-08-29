@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {routes} from '../../app-routing.module';
+import {protectedRoutes} from '../../app-routing.module';
 import {UserProfile} from '../../shared/user-profile';
 import {AuthenticationService} from '../../core/authentication/authentication.service';
 
@@ -25,7 +25,7 @@ enum Group {
 })
 export class NavigationComponent implements OnInit {
 
-  routes = routes;
+  protectedRoutes = protectedRoutes;
   public profile: UserProfile | null = null;
   public isMenuOpen = true;
 

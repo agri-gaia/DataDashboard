@@ -44,6 +44,8 @@ export const routes: Routes = [
   },
 ];
 
+export const protectedRoutes: Routes = routes.filter(route => route.canActivate?.includes(AuthGuard));
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
