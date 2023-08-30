@@ -8,7 +8,7 @@
 button {
   color: #FFF;
   cursor: pointer;
-  display: block;            
+  display: block;
   width: 100%;
   margin: 20px;
   text-align: center;
@@ -16,12 +16,11 @@ button {
 
 .bg {
   background-image: url("/assets/theme/marktplatzhintergrund.jpg");
-  margin:0px;
-  height:100%;
-  width:100%;
-  -webkit-background-size:cover;
-  -o-background-size:cover;
-  -moz-background-size:cover;
-  background-size:cover;
- }
- 
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
