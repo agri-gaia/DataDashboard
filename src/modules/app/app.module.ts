@@ -22,7 +22,7 @@ import {StartpageComponent} from "./components/startpage/startpage.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { environment } from 'src/environments/environment.localhost';
+import { environment } from 'src/environments/environment';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
