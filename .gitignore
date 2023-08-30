@@ -46,4 +46,4 @@ Thumbs.db
 
 .terraform*
 .angular/
-src/environments/environment.localhost.ts
+src/environments/environment.local.ts
