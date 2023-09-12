@@ -11,40 +11,42 @@ import { AuthGuard } from './core/authentication/auth-guard';
 
 export const routes: Routes = [
   {
-    path: 'meine-assets',
-    component: CatalogBrowserComponent,
-    data: {title: 'Meine Assets', icon: 'home', ownAssets: true },
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'catalog-browser',
-    component: CatalogBrowserComponent,
-    data: {title: 'Katalog', icon: 'sim_card', ownAssets: false },
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'contracts',
-    component: ContractViewerComponent,
-    data: {title: 'Käufe', icon: 'attachment'},
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'transfer-history',
-    component: TransferHistoryViewerComponent,
-    data: {title: 'Downloads', icon: 'assignment'},
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'registration',
-    component: RegistrationComponent
+    component: RegistrationComponent,
   },
   {
     path: '',
     component: StartpageComponent,
   },
+  {
+    path: '',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'meine-assets',
+        component: CatalogBrowserComponent,
+        data: { title: 'Meine Assets', icon: 'home', ownAssets: true },
+      },
+      {
+        path: 'catalog-browser',
+        component: CatalogBrowserComponent,
+        data: { title: 'Katalog', icon: 'sim_card', ownAssets: false },
+      },
+      {
+        path: 'contracts',
+        component: ContractViewerComponent,
+        data: { title: 'Käufe', icon: 'attachment' },
+      },
+      {
+        path: 'transfer-history',
+        component: TransferHistoryViewerComponent,
+        data: { title: 'Downloads', icon: 'assignment' },
+      },
+    ],
+  },
 ];
 
-export const protectedRoutes: Routes = routes.filter(route => route.canActivate?.includes(AuthGuard));
+export const protectedRoutes = routes.filter(route => route.canActivate?.includes(AuthGuard))[0].children;
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
