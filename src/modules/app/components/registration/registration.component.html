@@ -1,0 +1,67 @@
+<div class="bg"></div>
+<div class="center-container">
+  <div class="registration-form">
+    <h2 class="form-heading">Registrierungsformular</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div>
+        <mat-form-field>
+          <mat-label>Benutzername</mat-label>
+          <input matInput formControlName="benutzername">
+          <mat-error>Bitte Wert eingeben!</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Organisation</mat-label>
+          <input matInput formControlName="organisation">
+          <mat-error>Bitte Wert eingeben!</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>DataUrl des Connectors</mat-label>
+          <input matInput formControlName="dataUrl">
+          <mat-error>Bitte Wert eingeben!</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>IdsUrl des Connectors</mat-label>
+          <input matInput formControlName="idsUrl">
+          <mat-error>Bitte Wert eingeben!</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Url des Datenspeichers</mat-label>
+          <input matInput formControlName="storageEndpoint">
+          <mat-error>Bitte Wert eingeben!</mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+    <div class="button-container">
+      <button color="primary" mat-raised-button (click)="onSubmit()" [disabled]="!registrationForm.valid">Registrieren</button>
+      <button color="primary" mat-raised-button (click)="onHelp()">Support</button>
+    </div>
+  </div>
+  <div class="hints-container">
+    <p>
+      Die DataUrl bezeichnet die Adresse, die zu Ihrem web.http.data.path in Ihrer Connector-Konfiguration korrespondiert.
+      Haben Sie beispielsweise
+    </p>
+    <div class="center-hint">
+       <p>web.http.data.path=/api/v1/data</p>
+    </div>
+    <p>
+      gesetzt, so hat Ihre DataUrl die folgende Form:
+    </p>
+    <div class="center-hint">
+      <p>https://connector-123/api/v1/data</p>
+    </div>
+    <p>
+      Analog korrespondiert die IdsUrl Ihres Connectors zu dem Wert, den Sie dem web.http.ids.path zugewiesen haben.
+    </p>
+  </div>
+</div>
+
+

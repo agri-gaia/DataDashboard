@@ -5,32 +5,48 @@ import {ContractViewerComponent} from "../edc-demo/pages/contract-viewer/contrac
 import {
   TransferHistoryViewerComponent
 } from "../edc-demo/pages/transfer-history/transfer-history-viewer.component";
+import { StartpageComponent } from './components/startpage/startpage.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { AuthGuard } from './core/authentication/auth-guard';
 
 export const routes: Routes = [
   {
-    path: 'meine-assets',
-    component: CatalogBrowserComponent,
-    data: {title: 'Meine Assets', icon: 'home', ownAssets: true }
+    path: 'registration',
+    component: RegistrationComponent,
   },
   {
-    path: 'catalog-browser',
-    component: CatalogBrowserComponent,
-    data: {title: 'Katalog', icon: 'sim_card', ownAssets: false }
+    path: '',
+    component: StartpageComponent,
   },
   {
-    path: 'contracts',
-    component: ContractViewerComponent,
-    data: {title: 'Käufe', icon: 'attachment'}
+    path: '',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'meine-assets',
+        component: CatalogBrowserComponent,
+        data: { title: 'Meine Assets', icon: 'home', ownAssets: true },
+      },
+      {
+        path: 'catalog-browser',
+        component: CatalogBrowserComponent,
+        data: { title: 'Katalog', icon: 'sim_card', ownAssets: false },
+      },
+      {
+        path: 'contracts',
+        component: ContractViewerComponent,
+        data: { title: 'Käufe', icon: 'attachment' },
+      },
+      {
+        path: 'transfer-history',
+        component: TransferHistoryViewerComponent,
+        data: { title: 'Downloads', icon: 'assignment' },
+      },
+    ],
   },
-  {
-    path: 'transfer-history',
-    component: TransferHistoryViewerComponent,
-    data: {title: 'Downloads', icon: 'assignment'}
-  },
-  {
-    path: '', redirectTo: 'catalog-browser', pathMatch: 'full'
-  }
 ];
+
+export const protectedRoutes = routes.filter(route => route.canActivate?.includes(AuthGuard))[0].children;
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

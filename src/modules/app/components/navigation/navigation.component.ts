@@ -1,13 +1,21 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { take } from 'rxjs/operators';
-import { routes } from '../../app-routing.module';
-import { UserProfile } from '../../shared/user-profile';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {protectedRoutes} from '../../app-routing.module';
+import {UserProfile} from '../../shared/user-profile';
+import {AuthenticationService} from '../../core/authentication/authentication.service';
 
 enum Group {
-  LMIS = 'LMIS',
+  AgBRAIN = 'AgBRAIN',
+  Amazone = 'Amazone',
+  AVF = 'AVF',
+  Bosch = 'Bosch',
+  Claas = 'Claas',
+  DFKI = 'DFKI',
   HSOS = 'HSOS',
-  AgBRAIN = 'AgBRAIN'
+  Kotte = 'Kotte',
+  Krone = 'Krone',
+  LMIS = 'LMIS',
+  UOS = 'UOS',
+  Wernsing = 'Wernsing'
 }
 
 @Component({
@@ -17,21 +25,20 @@ enum Group {
 })
 export class NavigationComponent implements OnInit {
 
-  routes = routes;
+  protectedRoutes = protectedRoutes;
   public profile: UserProfile | null = null;
   public isMenuOpen = true;
 
   @Output() public toggleMenuEvent = new EventEmitter<number>();
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(public authenticationService: AuthenticationService) {}
 
   public ngOnInit(): void {
     this.authenticationService.userProfile$.subscribe(userProfile => {
-      if (!userProfile) {
-        throw new Error('UserProfile is null or undefined.');
+      if (!!userProfile) {
+        this.profile = userProfile
       }
-      this.profile = userProfile
-      })
+    })
   }
 
   public logout(): void {
@@ -42,19 +49,36 @@ export class NavigationComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
     this.toggleMenuEvent.emit(this.isMenuOpen ? 295 : 75);
   }
-  
+
   getGroupLogoSource(): string {
     let logoDir = "/assets/theme/company-logos/"
     switch (this.profile?.group) {
-      case Group.LMIS:
-        return logoDir + "lmis.svg"
-      case Group.HSOS:
-        return logoDir + "hsos.svg"
       case Group.AgBRAIN:
         return logoDir + "agbrain.svg"
+      case Group.Amazone:
+        return logoDir + "amazone.svg"
+      case Group.AVF:
+        return logoDir + "avf.svg"
+      case Group.Bosch:
+        return logoDir + "bosch.svg"
+      case Group.Claas:
+        return logoDir + "claas.svg"
+      case Group.DFKI:
+        return logoDir + "dfki.png"
+      case Group.HSOS:
+        return logoDir + "hsos.svg"
+      case Group.Kotte:
+        return logoDir + "kotte.svg"
+      case Group.Krone:
+        return logoDir + "krone.png"
+      case Group.LMIS:
+        return logoDir + "lmis.svg"
+      case Group.UOS:
+        return logoDir + "uos.svg"
+      case Group.Wernsing:
+        return logoDir + "wernsing.svg"
       default:
         throw new Error("Could not determine groupLogoPath.");
     }
   }
-
 }

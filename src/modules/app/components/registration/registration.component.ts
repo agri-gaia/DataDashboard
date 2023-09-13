@@ -1,0 +1,50 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss']
+})
+export class RegistrationComponent implements OnInit {
+  registrationForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {
+    this.registrationForm = this.formBuilder.group({
+      benutzername: ['', Validators.required],
+      organisation: ['', Validators.required],
+      dataUrl: ['', Validators.required],
+      idsUrl: ['', Validators.required],
+      storageEndpoint: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  onSubmit() {
+    const recipientEmail = 'registrierung-agmarktplatz@lmis.de';
+    const subject = `Registrierung für Agri-Gaia-Marktplatz`;
+    const body = `
+      Benutzername: ${this.registrationForm.get('benutzername')?.value}
+      Organisation: ${this.registrationForm.get('organisation')?.value}
+      DataUrl des Connectors: ${this.registrationForm.get('dataUrl')?.value}
+      IdsUrl des Connectors: ${this.registrationForm.get('idsUrl')?.value}
+      StorageEndpoint: ${this.registrationForm.get('storageEndpoint')?.value}
+    `;
+
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodedSubject}&body=${encodedBody}`;
+
+    window.open(mailtoLink);
+  }
+
+  onHelp() {
+    const recipientEmail = 'registrierung-agmarktplatz@lmis.de';
+    const subject = `Rückfrage zum Agri-Gaia-Marktplatz`;
+    const encodedSubject = encodeURIComponent(subject);
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodedSubject}`;
+
+    window.open(mailtoLink);
+  }
+}
