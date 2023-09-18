@@ -36,7 +36,8 @@
       <div mat-line>{{contractOffer.asset.originator}}</div>
     </mat-list-item>
 
-    <mat-list-item *ngIf="contractOffer.asset.contentType == 'Datensatz' || contractOffer.asset.contentType == 'KI-Modell'">
+    <mat-list-item
+      *ngIf="contractOffer.asset.contentType == 'Datensatz' || contractOffer.asset.contentType == 'KI-Modell'">
       <mat-icon mat-list-icon>storage</mat-icon>
       <div class="asset-property-name" mat-line>Byte Größe</div>
       <div mat-line>{{contractOffer.asset.properties?.byteSize ?? '- -'}}</div>
@@ -55,7 +56,8 @@
       <mat-icon mat-list-icon>date_range</mat-icon>
       <div class="asset-property-name" mat-line>Zeitraum</div>
       <div
-        mat-line>{{!!contractOffer.asset.properties.temporal ? contractOffer.asset.properties.temporal : '- -'}}</div>
+        mat-line>{{!!contractOffer.asset.properties.temporal ? contractOffer.asset.properties.temporal : '- -'}}
+      </div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>category</mat-icon>
