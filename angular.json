@@ -62,13 +62,19 @@
                 "styles": true
               }
             },
-            "development": {
+            "local": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -81,6 +87,9 @@
             },
             "development": {
               "browserTarget": "edc-demo-client:build:development"
+            },
+            "local": {
+              "browserTarget": "edc-demo-client:build:local"
             }
           },
           "options": {

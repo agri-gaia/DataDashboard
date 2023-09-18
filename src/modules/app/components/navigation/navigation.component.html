@@ -1,15 +1,15 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" *ngIf="this.authenticationService.isAuthenticated$ | async; else startPageTemplate">
   <mat-sidenav class="sidenav" fixedInViewport mode="side" opened="true" disableClose>
     <mat-toolbar>
       <div class="logo-container">
-        <img class="logo" src="/assets/theme/logo-agrigaia.svg" />
+        <img class="logo" src="/assets/theme/logo-agrigaia.svg"/>
       </div>
     </mat-toolbar>
     <mat-nav-list class="links">
       <mat-list-item fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="user-profile">
           <!-- Group Logo -->
-          <img class="logo group-logo" [src]="getGroupLogoSource()" />
+          <img class="logo group-logo" [src]="getGroupLogoSource()"/>
           <!-- Username -->
           <div class="group">{{ profile?.preferred_username }}</div>
         </div>
@@ -18,7 +18,7 @@
           <mat-icon>logout</mat-icon>
         </button>
       </mat-list-item>
-      <ng-container *ngFor="let route of routes">
+      <ng-container *ngFor="let route of protectedRoutes">
         <a [routerLink]="[route.path]" routerLinkActive="router-link-active">
           <mat-list-item *ngIf="route.component">
             <mat-icon mat-list-icon color="primary">{{ route.data?.icon }}</mat-icon>
@@ -33,3 +33,7 @@
     <router-outlet class="page"></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-template #startPageTemplate>
+  <router-outlet></router-outlet>
+</ng-template>
