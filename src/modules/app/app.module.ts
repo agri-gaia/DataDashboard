@@ -23,6 +23,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { environment } from 'src/environments/environment';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -59,7 +60,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTooltipModule,
   ],
   declarations: [
     AppComponent,
