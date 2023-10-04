@@ -6,6 +6,8 @@
       </div>
     </mat-toolbar>
     <mat-nav-list class="links">
+
+      <!--    User info and logout -->
       <mat-list-item fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="user-profile">
           <!-- Group Logo -->
@@ -18,6 +20,8 @@
           <mat-icon>logout</mat-icon>
         </button>
       </mat-list-item>
+
+      <!--    Routes -->
       <ng-container *ngFor="let route of protectedRoutes">
         <a [routerLink]="[route.path]" routerLinkActive="router-link-active">
           <mat-list-item *ngIf="route.component">
