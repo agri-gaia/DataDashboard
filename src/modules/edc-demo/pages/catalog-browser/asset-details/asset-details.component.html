@@ -43,7 +43,7 @@
       <div mat-line>{{contractOffer.asset.properties?.byteSize ?? '- -'}}</div>
     </mat-list-item>
     <mat-list-item *ngIf="contractOffer.asset.contentType == 'KI-Service'">
-      <mat-icon>api</mat-icon>
+      <mat-icon mat-list-icon>api</mat-icon>
       <div class="asset-property-name" mat-line>Open API Beschreibung</div>
       <div mat-line>{{contractOffer.asset.properties?.openApiDescription ?? '- -'}}</div>
     </mat-list-item>
