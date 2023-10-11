@@ -36,10 +36,16 @@
       <div mat-line>{{contractOffer.asset.originator}}</div>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item
+      *ngIf="contractOffer.asset.contentType == 'Datensatz' || contractOffer.asset.contentType == 'KI-Modell'">
       <mat-icon mat-list-icon>storage</mat-icon>
       <div class="asset-property-name" mat-line>Byte Größe</div>
       <div mat-line>{{contractOffer.asset.properties?.byteSize ?? '- -'}}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="contractOffer.asset.contentType == 'KI-Service'">
+      <mat-icon mat-list-icon>api</mat-icon>
+      <div class="asset-property-name" mat-line>Open API Beschreibung</div>
+      <div mat-line>{{contractOffer.asset.properties?.openApiDescription ?? '- -'}}</div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>drive_file_rename_outline</mat-icon>
@@ -49,12 +55,15 @@
     <mat-list-item>
       <mat-icon mat-list-icon>date_range</mat-icon>
       <div class="asset-property-name" mat-line>Zeitraum</div>
-      <div mat-line>{{!!contractOffer.asset.properties.temporal ? contractOffer.asset.properties.temporal : '- -'}}</div>
+      <div
+        mat-line>{{!!contractOffer.asset.properties.temporal ? contractOffer.asset.properties.temporal : '- -'}}
+      </div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>category</mat-icon>
       <div class="asset-property-name" mat-line>Agrovoc Kontext</div>
-      <a mat-line *ngFor="let theme of contractOffer.asset.properties.theme" [href]="theme" target="_blank">{{theme}}</a>
+      <a mat-line *ngFor="let theme of contractOffer.asset.properties.theme" [href]="theme"
+         target="_blank">{{theme}}</a>
       <div mat-line *ngIf="contractOffer.asset.properties.theme?.length === 0">- -</div>
     </mat-list-item>
     <mat-list-item>
@@ -65,6 +74,7 @@
     </mat-list-item>
   </mat-list>
   <mat-divider class="divider"></mat-divider>
+
   <div fxLayout="column">
     <h2>Policy Details</h2>
   </div>
@@ -73,33 +83,36 @@
     <mat-list-item>
       <mat-icon mat-list-icon>handshake</mat-icon>
       <div class="asset-property-name" mat-line>Verpflichtungen</div>
-      <div mat-line *ngFor="let obligation of contractOffer.policy.obligations!">{{ obligation.action?.type }} {{ obligation.target }}</div>
+      <div mat-line
+           *ngFor="let obligation of contractOffer.policy.obligations!">{{ obligation.action?.type }} {{ obligation.target }}</div>
       <div mat-line *ngIf="contractOffer.policy.obligations?.length === 0">- -</div>
     </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>lock</mat-icon>
       <div class="asset-property-name" mat-line>Verbote</div>
-      <div mat-line *ngFor="let prohibition of contractOffer.policy.prohibitions!"></div>
+      <div mat-line
+           *ngFor="let prohibition of contractOffer.policy.prohibitions!">{{ prohibition.action?.type }} {{ prohibition.target }}</div>
       <div mat-line *ngIf="contractOffer.policy.prohibitions?.length === 0">- -</div>
-    </mat-list-item>      
+    </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>approval</mat-icon>
       <div class="asset-property-name" mat-line>Berechtigungen</div>
       <div mat-line *ngFor="let permission of contractOffer.policy?.permissions">
         <ng-container *ngIf="permission?.action">
-          {{ permission.action?.type }} {{ permission.target }} 
+          {{ permission.action?.type }} {{ permission.target }}
           <ng-container *ngIf="permission.constraints && permission.constraints.length > 0">
             <strong>mit folgenden Einschränkungen:</strong>
             <ul>
               <li *ngFor="let constraint of permission.constraints">
-                {{ constraint.leftExpression?.value }} <strong>{{ constraint.operator }}</strong> {{ constraint.rightExpression?.value | date: 'dd.MM.yyyy HH:mm:ss' }}
+                {{ constraint.leftExpression?.value }}
+                <strong>{{ constraint.operator }}</strong> {{ constraint.rightExpression?.value | date: 'dd.MM.yyyy HH:mm:ss' }}
               </li>
             </ul>
           </ng-container>
         </ng-container>
-      </div>      
+      </div>
     </mat-list-item>
-    </mat-list>
+  </mat-list>
 
   <div class="footer" fxLayout="column">
     <div fxFlex fxLayoutAlign="end">
@@ -111,7 +124,8 @@
       >
         Kaufen
       </button>
-      <mat-progress-bar mode="indeterminate" *ngIf="runningNegotiation" [ngStyle]="runningNegotiation?{'color':'white'} : {}"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate" *ngIf="runningNegotiation"
+                        [ngStyle]="runningNegotiation?{'color':'white'} : {}"></mat-progress-bar>
     </div>
 
   </div>
