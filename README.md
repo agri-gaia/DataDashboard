@@ -1,83 +1,42 @@
-# EDC Data Dashboard
+# Agri-Gaia Marketplace Dashboard
 
-**Please note: This repository does not contain production-grade code and is only intended for demonstration purposes.**
+This repository represents a fork of the [EDC Data Dashboard](https://github.com/eclipse-edc/DataDashboard). In its current form, it contains the code for the Agri-Gaia Marketplace Dashboard. 
 
-EDC Data Dashboard is a dev frontend application for [EDC Data Management API](https://github.com/eclipse-dataspaceconnector/DataSpaceConnector).
+![image](src/assets/ag_marketplace.png)
 
-## Documentation
+## Installation 
 
-Developer documentation can be found under [docs/developer](docs/developer/), where the main concepts and decisions are captured as [decision records](docs/developer/decision-records/).
+In the following we only describe the process for deploying the Dashboard on an OKD Cluster since this is what we did within the project. At the current state of the document, we have yet to implement the mechanism for dynamically mounting an environment file into the running Dashboard container. As a temporary solution, the idea is to create the environment file merely locally, build the Docker image based on the provided Dockerfile in the root directory and then push it to your OKD image registry.  
 
-## Generate client code for EDC REST APIs
+First things first, create a file `environment.local.ts`. It is supposed to contain the values needed for communicating with the Agri-Gaia Marketplace Services, which you can find more information about [here](https://github.com/agri-gaia/marketplace-services). You can simply use this template:
 
-1. [optional] copy the current version of EDC's `openapi.yaml` file to `openapi/`. There is one checked in, so this is not required.
-2. in a shell execute
-   ```shell
-   docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate -i /local/openapi/openapi.yaml -g typescript-angular -o /local/src/modules/edc-dmgmt-client/
-   ```
-   This re-generates the service and model classes. 
+````
+export const environment = {
+  production: false,
+  backendUrl: '',
+  apiKey: '',
+};
+````
 
-> Please note that some of the client classes were edited manually after generation. When regenerating the classes for the API update be careful especially not to overwrite service `constructor` methods using the generator!
+Specifically, the `apiKey` refers to the `backend_service_api_admin_key` that you need to set within [this](https://github.com/agri-gaia/marketplace-services#create-secrets) context. Also fill in the necessary values for the `ImageStream`, `Deployment` and `Service`. The templates can be found in the `deployment` directory. Create the `ImageStream` first. Then, build, tag and push the Docker image: 
 
-## Running the frontend locally
-Should you want to run the frontend on your development machine, you'll have to configure some backend values. Those are stored in `app.config.json`, and 
-by default contain the following:
+1. `kubectl apply deployment/dashboard-image-stream.yaml`
+1. `docker build -t marktplatz-dashboard:latest .`
+1. `docker tag marktplatz-dashboard <okd-image-registry-address>/<marketplace-namespace>/marktplatz-dashboard`
+1. `docker push <okd-image-registry-address>/<marketplace-namespace>/marktplatz-dashboard`
 
-```json
-{
-  "dataManagementApiUrl": "{{dataManagementApiUrl}}",
-  "catalogUrl": "{{catalogUrl}}",
-  "storageAccount": "{{account}}",
-  "storageExplorerLinkTemplate": "storageexplorer://v=1&accountid=/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroup}}/providers/Microsoft.Storage/storageAccounts/{{account}}&subscriptionid={{subscriptionId}}&resourcetype=Azure.BlobContainer&resourcename={{container}}",
-  "apiKey": "{{apiKey}}"
-}
-```
-Substitute the values as necessary:
-- `apiKey`: enter here what your EDC instance expects in th `x-api-key` header
-- `catalogUrl`: prepend your connector URL, e.g. `http://localhost`, assuming your catalog endpoint is exposed at port 8181, which is the default
-- `dataManagementApiUrl`:  prepend your connector URL, e.g. `http://localhost`, assuming your IDS endpoint is exposed at port 9191
-- `storageAccount`: insert the name of an Azure Blob Storage account to which the connector has access, otherwise data transfers won't work.
+The `ImageStream` should now contain the respective reference to the Docker image, which can now be used for the actual deployment:
 
-**Be extra careful NOT to commit those changes, as they might leak potentially sensitive information!!!**
+1. `kubectl apply deployment/dashboard-deployment.yaml`
+1. `kubectl apply deployment/dashboard-service.yaml`
 
-As some extra safety consider running `git udpate-index --assume-unchanged src/assets/config/app.config.json` before changing this file.
+## Keycloak
 
+While there is an actual backend for the marketplace, it merely gets used for creating (or deleting) users, hence allowing the central marketplace connector to crawl the connectors of the participants and embedd their assets in a central catalog. Still, the actual communication between the EDCs is done via this Dashboard, which is simply done for historical reasons and demostration purposes (if you haven't deployed any EDC yet, take a look at [this](https://github.com/agri-gaia/dev-docs-platform-lmis-bosch/blob/main/docs/edc-deployment.md) documentation on how to do it). In order to provide the necessary URLs while the negotiating, transfering etc. happens, we use Keycloak group attributes that get inherited to specific Keycloak users. You need to provide four of these attributes:
 
+1. `storageEndpoint` (for example your MinIO API address)
+2. `url` (the ids URL of your connector)
+3. `dataConnectorUrl` (the data URL of your connector)
+4. `group` (name of your group, again provided in the form of an attribute)
 
-## Deploy to Azure
-
-Create a resource group and container registry:
-
-```bash
-export RESOURCE_GROUP=edc-data-dashboard
-export ACR_NAME=edcdatadashboard
-az group create --resource-group $RESOURCE_GROUP --location westeurope -o none
-az acr create --resource-group $RESOURCE_GROUP --name $ACR_NAME --sku Standard --location westeurope --admin-enabled -o none
-```
-
-Dockerize the application and push it to the registry by running:
-
-```bash
-az acr build --registry $ACR_NAME --image edc-showcase/edc-data-dashboard:latest .
-```
-
-The docker image is now ready to be deployed to Azure Container Instances (ACI). The `app.config.json` file contains configuration which is fetched by the application at startup. This file can be overridden at deployment time by mounting a secret on `assets/config`. For each deployment you need to provide the corresponding connector backend URL, the storage account name and the API key using this secret. Deploy to ACI using the following command:
-
-```bash
-export CONNECTOR_DATA_URL=<CONNECTOR_DATA_URL>
-export CONNECTOR_CATALOG_URL=<CONNECTOR_CATALOG_URL>
-export STORAGE_ACCOUNT=<STORAGE_ACCOUNT>
-export API_KEY=<API_KEY>
-
-# deploy to ACI (when prompted for credentials use the username/password as available in Azure Portal: ACR->Access Keys)
-az container create --image ${ACR_NAME}.azurecr.io/edc-showcase/edc-data-dashboard:latest \
---resource-group $RESOURCE_GROUP \
---name edc-data-dashboard \
---secrets "app.config.json"="{\"dataManagementApiUrl\": \"$CONNECTOR_DATA_URL\", \"catalogUrl\": \"$CONNECTOR_CATALOG_URL\", \"storageAccount\": \"$STORAGE_ACCOUNT\", \"apiKey\": \"$API_KEY\"}" \
---secrets-mount-path /usr/share/nginx/html/assets/config \
---dns-name-label edc-data-dashboard
-```
-
-## Contributing
-
-See [how to contribute](https://github.com/eclipse-dataspaceconnector/DataSpaceConnector/blob/main/CONTRIBUTING.md) for details.
+Then, for each group, create at least one user that belongs to this group. This user can then be used for the login, and upon the automatic retrieval of its JWT, the attributes will get mapped onto it. This mimics every user hosting its own EDC while working on a centralized Dashboard.  

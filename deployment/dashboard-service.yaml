@@ -1,0 +1,24 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: marktplatz-dashboard
+  namespace: <ag-marketplace>
+  labels:
+    app: marktplatz-dashboard
+    app.kubernetes.io/component: marktplatz-dashboard
+    app.kubernetes.io/instance: marktplatz-dashboard
+    app.kubernetes.io/name: marktplatz-dashboard
+    app.kubernetes.io/part-of: catalog-browser-app
+  annotations:
+    app.openshift.io/vcs-ref: 'r/catalog-browser:latest'
+    app.openshift.io/vcs-uri: 'https://github.com/agri-gaia/DataDashboard.git'
+    openshift.io/generated-by: OpenShiftWebConsole
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: marktplatz-dashboard
+    deployment: marktplatz-dashboard

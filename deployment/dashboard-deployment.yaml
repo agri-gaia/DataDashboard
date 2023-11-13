@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"marktplatz-dashboard:latest","namespace":"<marketplace-namespace>"},"fieldPath":"spec.template.spec.containers[?(@.name==\"marktplatz-dashboard\")].image","pause":"false"}]
+    openshift.io/generated-by: OpenShiftWebConsole
+  name: marktplatz-dashboard
+  namespace: <marketplace-namespace>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: marktplatz-dashboard
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: marktplatz-dashboard
+        app.kubernetes.io/component: marktplatz-dashboard
+        app.kubernetes.io/name: marktplatz-dashboard
+        deployment: marktplatz-dashboard
+    spec:
+      containers:
+        - name: marktplatz-dashboard
+          image: >-
+            <okd-image-registry-address>/<marketplace-namespace>/marktplatz-dashboard:latest
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
