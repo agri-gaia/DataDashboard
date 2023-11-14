@@ -12,13 +12,16 @@ This repository represents a fork of the [EDC Data Dashboard](https://github.com
 
 In the following we only describe the process for deploying the Dashboard on an OKD Cluster since this is what we did within the project. At the current state of the document, we have yet to implement the mechanism for dynamically mounting an environment file into the running Dashboard container. As a temporary solution, the idea is to create the environment file merely locally, build the Docker image based on the provided Dockerfile in the root directory and then push it to your OKD image registry.  
 
-First things first, create a file `environment.local.ts`. It is supposed to contain the values needed for communicating with the Agri-Gaia Marketplace Services, which you can find more information about [here](https://github.com/agri-gaia/marketplace-services). You can simply use this template:
+First things first, create a file `environment.local.ts`. It is supposed to contain the values needed for communicating with Keycloak and with the Agri-Gaia Marketplace Services, which you can find more information about [here](https://github.com/agri-gaia/marketplace-services). You can simply use this template:
 
 ````
 export const environment = {
   production: false,
   backendUrl: '',
   apiKey: '',
+  keycloakUrl: '',
+  realm: '',
+  clientId: ''
 };
 ````
 
