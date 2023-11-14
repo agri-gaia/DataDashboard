@@ -4,6 +4,10 @@ This repository represents a fork of the [EDC Data Dashboard](https://github.com
 
 ![image](src/assets/ag_marketplace.png)
 
+## Development Server
+
+Run `ng serve` or `ng serve --configuration=local` for a dev server.
+
 ## Prerequisites
 
 - Keycloak 
