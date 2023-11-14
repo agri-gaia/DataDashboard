@@ -4,6 +4,10 @@ This repository represents a fork of the [EDC Data Dashboard](https://github.com
 
 ![image](src/assets/ag_marketplace.png)
 
+## Prerequisites
+
+- Keycloak 
+
 ## Installation 
 
 In the following we only describe the process for deploying the Dashboard on an OKD Cluster since this is what we did within the project. At the current state of the document, we have yet to implement the mechanism for dynamically mounting an environment file into the running Dashboard container. As a temporary solution, the idea is to create the environment file merely locally, build the Docker image based on the provided Dockerfile in the root directory and then push it to your OKD image registry.  
@@ -32,7 +36,7 @@ The `ImageStream` should now contain the respective reference to the Docker imag
 
 ## Keycloak
 
-While there is an actual backend for the marketplace, it merely gets used for creating (or deleting) users, hence allowing the central marketplace connector to crawl the connectors of the participants and embedd their assets in a central catalog. Still, the actual communication between the EDCs is done via this Dashboard, which is simply done for historical reasons and demostration purposes (if you haven't deployed any EDC yet, take a look at [this](https://github.com/agri-gaia/dev-docs-platform-lmis-bosch/blob/main/docs/edc-deployment.md) documentation on how to do it). In order to provide the necessary URLs while the negotiating, transfering etc. happens, we use Keycloak group attributes that get inherited to specific Keycloak users. You need to provide four of these attributes:
+While there exists an actual backend for the marketplace, it merely gets used for creating (or deleting) users, hence allowing the central marketplace connector to crawl the connectors of the participants and embedd their assets in a central catalog. Still, the actual communication between the EDCs is done via this Dashboard, which is simply done for historical reasons and demostration purposes (if you haven't deployed any EDC yet, take a look at [this](https://github.com/agri-gaia/dev-docs-platform-lmis-bosch/blob/main/docs/edc-deployment.md) documentation on how to do it). In order to provide the necessary URLs while the negotiating, transfering etc. happens, we use Keycloak group attributes that get inherited to specific Keycloak users. You need to provide four of these attributes:
 
 1. `storageEndpoint` (for example your MinIO API address)
 2. `url` (the ids URL of your connector)
