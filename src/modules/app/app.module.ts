@@ -22,16 +22,16 @@ import {StartpageComponent} from "./components/startpage/startpage.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment.local';
 import {MatTooltipModule} from "@angular/material/tooltip";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'https://account.platform.agri-gaia.com',
-        realm: 'agri-gaia-marketplace',
-        clientId: 'ag-test-marktplatz'
+        url: environment.keycloakUrl,
+        realm: environment.realm,
+        clientId: environment.clientId
       },
       initOptions: {
         onLoad: 'check-sso',
