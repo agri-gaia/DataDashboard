@@ -18,7 +18,7 @@ In the following we only describe the process for deploying the Dashboard on an 
 
 First things first, create a file `environment.local.ts`. It is supposed to contain the values needed for communicating with Keycloak and with the Agri-Gaia Marketplace Services, which you can find more information about [here](https://github.com/agri-gaia/marketplace-services). You can simply use this template:
 
-````
+```javascript
 export const environment = {
   production: false,
   backendUrl: '',
@@ -27,7 +27,7 @@ export const environment = {
   realm: '',
   clientId: ''
 };
-````
+```
 
 Specifically, the `apiKey` refers to the `backend_service_api_admin_key` that you need to set within [this](https://github.com/agri-gaia/marketplace-services#create-secrets) context. Also fill in the necessary values for the `ImageStream`, `Deployment` and `Service`. The templates can be found in the `deployment` directory. Create the `ImageStream` first. Then, build, tag and push the Docker image: 
 
