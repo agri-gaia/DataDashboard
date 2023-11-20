@@ -1,0 +1,14 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: marktplatz-dashboard
+  namespace: <marketplace-namespace>
+  labels:
+    app: marktplatz-dashboard
+    app.kubernetes.io/component: marktplatz-dashboard
+    app.kubernetes.io/instance: marktplatz-dashboard
+    app.kubernetes.io/name: marktplatz-dashboard
+    app.kubernetes.io/part-of: catalog-browser-app
+spec:
+  lookupPolicy:
+    local: false
