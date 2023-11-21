@@ -6,6 +6,9 @@ export const environment = {
   production: false,
   backendUrl: "",
   apiKey: "",
+  keycloakUrl: "",
+  realm: "",
+  clientId: ""
 };
 
 /*
