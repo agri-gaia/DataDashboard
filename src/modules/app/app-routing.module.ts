@@ -23,7 +23,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'meine-assets',
+        path: 'my-assets',
         component: CatalogBrowserComponent,
         data: { title: 'Meine Assets', icon: 'home', ownAssets: true },
       },
