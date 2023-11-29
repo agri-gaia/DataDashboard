@@ -15,7 +15,8 @@ enum Group {
   Krone = 'Krone',
   LMIS = 'LMIS',
   UOS = 'UOS',
-  Wernsing = 'Wernsing'
+  Wernsing = 'Wernsing',
+  AgVolution = 'AgVolution'
 }
 
 @Component({
@@ -77,6 +78,8 @@ export class NavigationComponent implements OnInit {
         return logoDir + "uos.svg"
       case Group.Wernsing:
         return logoDir + "wernsing.svg"
+      case Group.AgVolution:
+        return logoDir + "agvolution.png"
       default:
         throw new Error("Could not determine groupLogoPath.");
     }
