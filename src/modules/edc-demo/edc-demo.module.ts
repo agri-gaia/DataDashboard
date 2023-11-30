@@ -34,6 +34,8 @@ import {ConfirmationDialogComponent} from './components/confirmation-dialog/conf
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {AppToolbarComponent} from "./pages/frame/app-toolbar/app-toolbar.component";
 import {AssetDetailsComponent} from './pages/catalog-browser/asset-details/asset-details.component';
+import { ServiceBrowserComponent } from './pages/service-browser/service-browser.component';
+import { ServiceDetailsComponent } from './pages/service-browser/service-details/service-details.component';
 
 @NgModule({
   imports: [
@@ -73,6 +75,8 @@ import {AssetDetailsComponent} from './pages/catalog-browser/asset-details/asset
     ConfirmationDialogComponent,
     AppToolbarComponent,
     AssetDetailsComponent,
+    ServiceBrowserComponent,
+    ServiceDetailsComponent,
   ],
   exports: [
     CatalogBrowserComponent,

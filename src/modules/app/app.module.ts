@@ -24,6 +24,7 @@ import {MatInputModule} from "@angular/material/input";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {environment} from 'src/environments/environment';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -44,25 +45,26 @@ function initializeKeycloak(keycloak: KeycloakService) {
 }
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    EdcDemoModule,
-    MatSnackBarModule,
-    KeycloakAngularModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FlexLayoutModule,
-    MatTooltipModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        EdcDemoModule,
+        MatSnackBarModule,
+        KeycloakAngularModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FlexLayoutModule,
+        MatTooltipModule,
+        MatExpansionModule,
+    ],
   declarations: [
     AppComponent,
     NavigationComponent,

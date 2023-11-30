@@ -1,52 +1,76 @@
-<mat-sidenav-container class="sidenav-container" *ngIf="this.authenticationService.isAuthenticated$ | async; else startPageTemplate">
-  <mat-sidenav class="sidenav" fixedInViewport mode="side" opened="true" disableClose>
-    <mat-toolbar>
-      <div class="logo-container">
-        <img class="logo" src="/assets/theme/logo-agrigaia.svg"/>
-      </div>
-    </mat-toolbar>
-    <mat-nav-list class="links">
+<mat-sidenav-container class="sidenav-container"
+                       *ngIf="this.authenticationService.isAuthenticated$ | async; else startPageTemplate">
+    <mat-sidenav class="sidenav" fixedInViewport mode="side" opened="true" disableClose>
+        <mat-toolbar>
+            <div class="logo-container">
+                <img class="logo" src="/assets/theme/logo-agrigaia.svg"/>
+            </div>
+        </mat-toolbar>
+        <mat-nav-list class="links">
 
-      <!--    User info and logout -->
-      <mat-list-item fxLayout="row" fxLayoutAlign="space-between center">
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="user-profile">
-          <!-- Group Logo -->
-          <img class="logo group-logo" [src]="getGroupLogoSource()"/>
-          <!-- Username -->
-          <div class="group">{{ profile?.preferred_username }}</div>
-        </div>
-        <!-- Logout Button -->
-        <button mat-icon-button (click)="logout()" class="logout-button">
-          <mat-icon>logout</mat-icon>
-        </button>
-      </mat-list-item>
+            <!--    User info and logout -->
+            <mat-list-item fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="user-profile">
+                    <!-- Group Logo -->
+                    <img class="logo group-logo" [src]="getGroupLogoSource()"/>
+                    <!-- Username -->
+                    <div class="group">{{ profile?.preferred_username }}</div>
+                </div>
+                <!-- Logout Button -->
+                <button mat-icon-button (click)="logout()" class="logout-button">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </mat-list-item>
 
-      <!--    Routes -->
-      <ng-container *ngFor="let route of protectedRoutes">
-        <a [routerLink]="[route.path]" routerLinkActive="router-link-active">
-          <mat-list-item *ngIf="route.component">
-            <mat-icon mat-list-icon color="primary">{{ route.data?.icon }}</mat-icon>
-            <span matLine>{{ route.data?.title ?? route.path }}</span>
-          </mat-list-item>
-        </a>
-      </ng-container>
+            <!--    Routes -->
+            <ng-container *ngFor="let route of protectedRoutes">
+                <a [routerLink]="[route.path]" routerLinkActive="router-link-active" *ngIf="!route.children
+                   && route.path != 'services'">
+                    <mat-list-item *ngIf="route.component">
+                        <mat-icon mat-list-icon color="primary">{{ route.data?.icon }}</mat-icon>
+                        <span matLine>{{ route.data?.title ?? route.path }}</span>
+                    </mat-list-item>
+                </a>
 
-      <!--    External links -->
-      <a href="https://catalog.apps.nalamki.de/" target="_blank">
-        <mat-list-item matTooltip="Hier gelangen Sie zum Katalog des Schwesterprojektes NaLamkI.">
-          <mat-icon mat-list-icon color="primary">open_in_new</mat-icon>
-          <span matLine>NaLamkI</span>
-        </mat-list-item>
-      </a>
+                <div *ngIf="route.children">
+                    <mat-expansion-panel class="mat-elevation-z0">
+                        <mat-expansion-panel-header>
+                            <a [routerLink]="[route.path]" routerLinkActive="router-link-active">
+                                <mat-list-item>
+                                    <mat-icon mat-list-icon color="primary">{{ route.data?.icon }}</mat-icon>
+                                    <span matLine>{{route.data?.title ?? route.path}}</span>
+                                </mat-list-item>
+                            </a>
+                        </mat-expansion-panel-header>
+                        <div *ngFor="let childRoute of route.children">
+                            <a [routerLink]="[childRoute.path]" routerLinkActive="router-link-active">
+                                <mat-list-item>
+                                    <mat-icon mat-list-icon color="primary">{{ childRoute.data?.icon }}</mat-icon>
+                                    <span matLine>{{childRoute.data?.title ?? childRoute.path}}</span>
+                                </mat-list-item>
+                            </a>
+                        </div>
+                    </mat-expansion-panel>
+                </div>
+                <!--                </a>-->
+            </ng-container>
 
-    </mat-nav-list>
-    <div style="flex-grow: 100"></div>
-  </mat-sidenav>
-  <mat-sidenav-content class="sidenav-content">
-    <router-outlet class="page"></router-outlet>
-  </mat-sidenav-content>
+            <!--    External links -->
+            <a href="https://catalog.apps.nalamki.de/" target="_blank">
+                <mat-list-item matTooltip="Hier gelangen Sie zum Katalog des Schwesterprojektes NaLamkI.">
+                    <mat-icon mat-list-icon color="primary">open_in_new</mat-icon>
+                    <span matLine>NaLamkI</span>
+                </mat-list-item>
+            </a>
+
+        </mat-nav-list>
+        <div style="flex-grow: 100"></div>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+        <router-outlet class="page"></router-outlet>
+    </mat-sidenav-content>
 </mat-sidenav-container>
 
 <ng-template #startPageTemplate>
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </ng-template>

@@ -8,6 +8,7 @@ import {
 import { StartpageComponent } from './components/startpage/startpage.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AuthGuard } from './core/authentication/auth-guard';
+import {ServiceBrowserComponent} from "../edc-demo/pages/service-browser/service-browser.component";
 
 export const routes: Routes = [
   {
@@ -23,6 +24,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'services',
+        component: ServiceBrowserComponent,
+        data: { title: 'Services', icon: 'linked_services' },
+      },
+      {
         path: 'my-assets',
         component: CatalogBrowserComponent,
         data: { title: 'Meine Assets', icon: 'home', ownAssets: true },
@@ -31,6 +37,13 @@ export const routes: Routes = [
         path: 'catalog-browser',
         component: CatalogBrowserComponent,
         data: { title: 'Katalog', icon: 'sim_card', ownAssets: false },
+        children: [
+          {
+            path: 'services',
+            component: ServiceBrowserComponent,
+            data: { title: 'Services', icon: 'linked_services' },
+          },
+        ]
       },
       {
         path: 'contracts',

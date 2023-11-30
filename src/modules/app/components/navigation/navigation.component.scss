@@ -7,15 +7,19 @@
   font-size: 12px;
 }
 
+mat-expansion-panel-header {
+  padding-left: 0;
+}
+
 .user-profile {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .group-logo {
-  height: 15px; 
-  margin-right: 5px; 
+  height: 15px;
+  margin-right: 5px;
 }
 
 .group {
@@ -25,14 +29,14 @@
   padding-left: 16px;
   padding-right: 2px;
   white-space: nowrap;
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .logout-button {
   margin-top: 30px;
   margin-bottom: 30px;
-  padding-right: 16px; 
+  padding-right: 16px;
   margin-left: auto
 }
 
